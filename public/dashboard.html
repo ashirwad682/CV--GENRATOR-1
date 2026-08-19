@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - CV Builder</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fa-solid fa-file-invoice"></i> Executive CV Builder
+        </div>
+        <div class="nav-user">
+            <div class="user-badge">
+                <div class="user-avatar" id="user-avatar-initials">U</div>
+                <span class="user-name" id="user-display-name">Loading...</span>
+            </div>
+            <button class="btn-logout" onclick="handleLogout()">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <!-- Dashboard Main Content Container -->
+    <div class="dashboard-container">
+
+        <!-- Hero Section & Analytics -->
+        <div class="dashboard-hero">
+            <div class="dashboard-title">
+                <h1>My Resumes & CVs</h1>
+                <p>Manage, edit, preview, and download all your personalized CV documents in one place.</p>
+            </div>
+
+            <div class="glass-panel stats-card">
+                <div class="stats-icon">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+                <div class="stats-info">
+                    <span class="stats-number" id="total-cv-count">0</span>
+                    <span class="stats-label">Total CVs Created</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls: Search & Create -->
+        <div class="dashboard-controls">
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Search CVs by title..." oninput="filterCVs()">
+            </div>
+
+            <button class="btn-create" onclick="openCreateModal()">
+                <i class="fa-solid fa-plus"></i> Create New CV
+            </button>
+        </div>
+
+        <!-- CV Cards Grid -->
+        <div class="cv-grid" id="cv-grid">
+            <!-- CV Cards will be dynamically populated here -->
+        </div>
+
+    </div>
+
+    <!-- CREATE CV MODAL -->
+    <div class="modal-overlay" id="create-modal">
+        <div class="glass-panel modal-body">
+            <div class="modal-header">
+                <h3 class="modal-title">Create New CV</h3>
+                <button class="modal-close" onclick="closeCreateModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="handleCreateCV(event)">
+                <div class="form-group">
+                    <label class="form-label" for="cv-title">CV Title / Job Role Target</label>
+                    <input type="text" id="cv-title" class="form-input" placeholder="e.g. Senior Full Stack Engineer CV" required>
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 24px;">
+                    <button type="button" class="btn-preview" style="flex:1; padding: 12px;" onclick="closeCreateModal()">Cancel</button>
+                    <button type="submit" class="btn-primary" style="flex:1; padding: 12px;" id="create-submit-btn">
+                        <i class="fa-solid fa-check"></i> Create CV
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PREVIEW CV MODAL -->
+    <div class="modal-overlay" id="preview-modal">
+        <div class="glass-panel modal-body preview-modal-body">
+            <div class="modal-header">
+                <h3 class="modal-title" id="preview-modal-title">CV Preview</h3>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn-download" id="preview-download-pdf-btn"><i class="fa-solid fa-file-pdf"></i> Download PDF</button>
+                    <button class="modal-close" onclick="closePreviewModal()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            <div class="preview-content-area" id="preview-content-area">
+                <!-- Hydrated CV Preview -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

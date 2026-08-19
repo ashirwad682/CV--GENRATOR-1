@@ -1,0 +1,3007 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ashirwad Kumar - Resume</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📄</text></svg>">
+    <!-- Include FontAwesome for professional contact icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Include html2pdf library for direct client-side PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fa;
+            margin: 0;
+            padding: 16px;
+            color: #111;
+            line-height: 1.4;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            max-width: 100%;
+            margin: auto;
+            background: #fff;
+            padding: 22px 34px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Executive Header Toolbar - Perfectly Fitted Inside 210mm */
+        #download-bar {
+            width: 210mm;
+            max-width: 100%;
+            margin: 0 auto 12px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: nowrap;
+            background: #ffffff;
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
+            box-sizing: border-box;
+        }
+
+        .toolbar-brand {
+            font-size: 11.5px;
+            color: #0f172a;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .toolbar-brand i {
+            color: #0066cc;
+            font-size: 13px;
+        }
+
+        /* Compact Formatting Palette */
+        .formatting-tools {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            background: #f8fafc;
+            padding: 2px 4px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+
+        .tool-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: #475569;
+            width: 26px;
+            height: 26px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11.5px;
+            transition: all 0.15s ease;
+        }
+
+        .tool-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .tool-btn:hover:not(:disabled) {
+            background: #0066cc;
+            color: #ffffff;
+            border-color: #0066cc;
+        }
+
+        .color-picker-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            color: #475569;
+            font-size: 11.5px;
+            transition: all 0.15s ease;
+        }
+
+        .color-picker-wrapper:hover {
+            background: #0066cc;
+            color: #ffffff;
+            border-color: #0066cc;
+        }
+
+        .color-picker-wrapper input[type="color"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        /* Professional Document-Style Font Size Stepper Widget */
+        .font-size-control-group {
+            display: inline-flex;
+            align-items: center;
+            gap: 1px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            padding: 1px;
+        }
+
+        .tool-btn-sm {
+            background: transparent;
+            border: none;
+            color: #475569;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9.5px;
+            transition: all 0.15s ease;
+        }
+
+        .tool-btn-sm:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .font-size-select-pro {
+            border: none;
+            background: transparent;
+            font-size: 11px;
+            font-weight: 600;
+            color: #1e293b;
+            padding: 0 2px;
+            outline: none;
+            cursor: pointer;
+            text-align: center;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .toolbar-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .history-trigger-btn {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid #cbd5e1;
+            padding: 0 8px;
+            height: 28px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .history-trigger-btn:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+
+        .history-badge {
+            background: #0066cc;
+            color: white;
+            font-size: 9.5px;
+            font-weight: bold;
+            padding: 1px 5px;
+            border-radius: 10px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #0066cc 0%, #004fb3 100%);
+            color: #ffffff;
+            border: none;
+            padding: 0 9px;
+            height: 28px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0, 102, 204, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(135deg, #0052b3 0%, #003d8f 100%);
+            box-shadow: 0 3px 8px rgba(0, 102, 204, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .add-btn {
+            background: #f0f7ff;
+            color: #0066cc;
+            border: 1px dashed #0066cc;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 4px;
+            margin-bottom: 6px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .add-btn:hover {
+            background: #e0f0ff;
+            border-style: solid;
+        }
+
+        .add-bullet-btn {
+            background: transparent;
+            color: #0066cc;
+            border: 1px dashed #0066cc;
+            padding: 2px 8px;
+            font-size: 10.5px;
+            font-weight: bold;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 16px;
+            margin-top: 2px;
+            margin-bottom: 4px;
+            display: inline-block;
+        }
+
+        .add-bullet-btn:hover {
+            background: #f0f7ff;
+        }
+
+        /* Absolutely Positioned Delete Button */
+        .title, .subtitle, .cert-row, .skills-row, li {
+            position: relative;
+        }
+
+        .delete-btn {
+            position: absolute;
+            right: -28px;
+            top: 50%;
+            transform: translateY(-50%) scale(0.85);
+            background: rgba(239, 68, 68, 0.08);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+            user-select: none;
+            z-index: 20;
+            white-space: nowrap;
+        }
+
+        .item:hover > .title .delete-btn,
+        .item:hover > .subtitle .delete-btn,
+        .cert-row:hover .delete-btn,
+        .skills-row:hover .delete-btn,
+        li:hover > .delete-btn {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
+
+        .delete-btn:hover {
+            background: #ef4444;
+            color: #ffffff;
+            border-color: #dc2626;
+        }
+
+        /* Dedicated Overlay Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            width: 560px;
+            max-width: 92%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(20px);
+            transition: transform 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-close-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .modal-close-btn:hover {
+            color: white;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 5px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #0066cc;
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.15);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 14px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            font-size: 12.5px;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .req-badge {
+            color: #ef4444;
+            font-weight: bold;
+            margin-left: 2px;
+        }
+
+        .modal-footer {
+            padding: 14px 20px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #334155;
+            border: none;
+            padding: 8px 14px;
+            font-size: 12.5px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 12.5px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #004fb3;
+        }
+
+        .history-list {
+            padding: 16px 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 8px;
+            background: #ffffff;
+            transition: all 0.15s ease;
+        }
+
+        .history-item:hover {
+            border-color: #0066cc;
+            background: #f0f7ff;
+        }
+
+        .history-item.current {
+            border-color: #0066cc;
+            background: #eff6ff;
+            box-shadow: 0 0 0 1px #0066cc;
+        }
+
+        .history-item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .history-item-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .history-item-time {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .restore-version-btn {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            font-size: 11.5px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .restore-version-btn:hover {
+            background: #004fb3;
+        }
+
+        /* Hover indicator for links */
+        a {
+            cursor: pointer;
+        }
+
+        a:hover {
+            outline: 1px dashed #0066cc;
+        }
+
+        /* Editable indicators */
+        [contenteditable="true"]:hover {
+            outline: 1px dashed #0066cc;
+            background-color: #f8fbff;
+            border-radius: 2px;
+            cursor: text;
+        }
+
+        [contenteditable="true"]:focus {
+            outline: 2px solid #0066cc;
+            background-color: #eff6ff;
+            border-radius: 2px;
+        }
+
+        .header-container {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            margin: 0 0 3px;
+            font-size: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .address-sub {
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        h2 {
+            border-bottom: 1.5px solid #333;
+            font-size: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 14px;
+            margin-bottom: 6px;
+            padding-bottom: 2.5px;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact {
+            text-align: center;
+            font-size: 11.5px;
+            color: #333;
+            white-space: nowrap;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            gap: 3px;
+        }
+
+        .contact span {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 2px;
+            white-space: nowrap;
+        }
+
+        .contact a {
+            color: #0066cc;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+        }
+
+        .contact i {
+            margin-right: 3px;
+            color: #333;
+        }
+
+        .item {
+            margin-bottom: 9px;
+            position: relative;
+        }
+
+        .title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .subtitle {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-style: italic;
+            font-size: 12.5px;
+            color: #444;
+            margin-bottom: 2.5px;
+        }
+
+        ul {
+            margin: 3px 0 0 18px;
+            padding: 0;
+            font-size: 12.5px;
+        }
+
+        li {
+            margin-bottom: 3px;
+            line-height: 1.4;
+        }
+
+        .skills-row,
+        .cert-row {
+            font-size: 12.5px;
+            margin-bottom: 3px;
+            line-height: 1.4;
+        }
+
+        .cert-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Clean Preview & PDF Export Mode overrides */
+        body.preview-mode-active #dashboard-back-link,
+        body.preview-mode-active .add-btn,
+        body.preview-mode-active .add-bullet-btn,
+        body.preview-mode-active .delete-btn,
+        body.in-preview-iframe #download-bar,
+        body.in-preview-iframe #dashboard-back-link,
+        body.pdf-export-mode .no-export,
+        body.pdf-export-mode .add-btn,
+        body.pdf-export-mode .add-bullet-btn,
+        body.pdf-export-mode .delete-btn,
+        body.pdf-export-mode .modal-overlay,
+        body.pdf-export-mode .formatting-tools {
+            display: none !important;
+        }
+
+        body.preview-mode-active [contenteditable="true"]:hover,
+        body.preview-mode-active [contenteditable="true"]:focus,
+        body.pdf-export-mode [contenteditable="true"],
+        body.pdf-export-mode [contenteditable="true"]:hover,
+        body.pdf-export-mode [contenteditable="true"]:focus {
+            outline: none !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+
+        body.preview-mode-active a:hover,
+        body.pdf-export-mode a:hover {
+            outline: none !important;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            max-width: 100%;
+            margin: 0 auto 24px auto;
+            background: #fff;
+            padding: 22px 34px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .page-sheet-extra {
+            width: 210mm;
+            min-height: 297mm;
+            max-width: 100%;
+            margin: 0 auto 24px auto;
+            background: #fff;
+            padding: 22px 34px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .sheet-footer-tag {
+            position: absolute;
+            bottom: 8px;
+            right: 20px;
+            font-size: 10px;
+            color: #94a3b8;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        body.pdf-export-mode .sheet-footer-tag {
+            display: none !important;
+        }
+
+        body.pdf-export-mode .page-sheet-extra {
+            box-shadow: none !important;
+            border: none !important;
+            margin: 0 auto !important;
+        }
+
+        body.pdf-export-mode .page {
+            box-shadow: none !important;
+            border: none !important;
+            transform: none !important;
+        }
+
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            .no-export, #download-bar, .add-btn, .add-bullet-btn, .delete-btn, .modal-overlay, .formatting-tools {
+                display: none !important;
+            }
+
+            body {
+                background: #fff;
+                padding: 0;
+                margin: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page {
+                box-shadow: none !important;
+                padding: 22px 34px !important;
+                width: 210mm !important;
+                margin: 0 auto !important;
+                box-sizing: border-box !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Executive Sleek Header Toolbar - Perfectly Fitted -->
+    <div id="download-bar" class="no-export">
+        <div class="toolbar-brand" style="display:flex; align-items:center; gap:8px;">
+            <a href="/dashboard.html" id="dashboard-back-link" class="history-trigger-btn" style="text-decoration:none; background:#0f172a; color:#fff; padding:4px 8px; border-radius:4px; font-size:11px;" title="Back to User Dashboard">
+                <i class="fa-solid fa-arrow-left"></i> Dashboard
+            </a>
+            <div style="display:flex; align-items:center; gap:4px;">
+                <i class="fa-solid fa-file-pen" style="color:#0066cc;"></i>
+                <input type="text" id="cv-title-input" value="Untitled CV" placeholder="CV Title..." style="font-weight:700; border:1px solid #cbd5e1; border-radius:4px; padding:3px 8px; font-size:12px; max-width:170px; color:#0f172a; outline:none;" onchange="saveCVToDatabase()">
+            </div>
+        </div>
+
+        <!-- Rich Text & Formatting Tools -->
+        <div class="formatting-tools">
+            <button class="tool-btn" id="undo-action-btn" type="button" title="Undo (Ctrl+Z)" onclick="HistoryManager.undo()"><i class="fa-solid fa-rotate-left"></i></button>
+            <button class="tool-btn" id="redo-action-btn" type="button" title="Redo (Ctrl+Y)" onclick="HistoryManager.redo()"><i class="fa-solid fa-rotate-right"></i></button>
+            <div style="width: 1px; height: 16px; background: #cbd5e1; margin: 0 2px;"></div>
+            <button class="tool-btn" type="button" title="Bold Text" onmousedown="event.preventDefault()" onclick="formatText('bold')"><i class="fa-solid fa-bold"></i></button>
+            <button class="tool-btn" type="button" title="Italicize Text" onmousedown="event.preventDefault()" onclick="formatText('italic')"><i class="fa-solid fa-italic"></i></button>
+            <button class="tool-btn" type="button" title="Underline Text" onmousedown="event.preventDefault()" onclick="formatText('underline')"><i class="fa-solid fa-underline"></i></button>
+            <div style="width: 1px; height: 16px; background: #cbd5e1; margin: 0 2px;"></div>
+            <!-- Professional Stepper & Selector Widget -->
+            <div class="font-size-control-group" title="Font Size">
+                <button class="tool-btn-sm" type="button" title="Decrease Font Size" onmousedown="event.preventDefault()" onclick="stepFontSize(-1)"><i class="fa-solid fa-minus"></i></button>
+                <select id="fontSizeSelect" class="font-size-select-pro" title="Select Font Size" onchange="applyProFontSize(this.value)">
+                    <option value="8pt">8 pt</option>
+                    <option value="9pt">9 pt</option>
+                    <option value="10pt">10 pt</option>
+                    <option value="11pt">11 pt</option>
+                    <option value="12pt" selected>12 pt</option>
+                    <option value="13pt">13 pt</option>
+                    <option value="14pt">14 pt</option>
+                    <option value="16pt">16 pt</option>
+                    <option value="18pt">18 pt</option>
+                    <option value="20pt">20 pt</option>
+                    <option value="22pt">22 pt</option>
+                    <option value="24pt">24 pt</option>
+                    <option value="28pt">28 pt</option>
+                    <option value="32pt">32 pt</option>
+                    <option value="36pt">36 pt</option>
+                    <option value="40pt">40 pt</option>
+                    <option value="48pt">48 pt</option>
+                    <option value="54pt">54 pt</option>
+                    <option value="60pt">60 pt</option>
+                    <option value="72pt">72 pt</option>
+                    <option value="96pt">96 pt (Max)</option>
+                </select>
+                <button class="tool-btn-sm" type="button" title="Increase Font Size" onmousedown="event.preventDefault()" onclick="stepFontSize(1)"><i class="fa-solid fa-plus"></i></button>
+            </div>
+            <label class="color-picker-wrapper" title="Choose Text Color" onmousedown="saveCurrentSelection()">
+                <i class="fa-solid fa-palette"></i>
+                <input type="color" id="textColorPicker" value="#0066cc" onchange="formatTextColor(this.value)">
+            </label>
+            <button class="tool-btn" type="button" title="Edit Link URL" onmousedown="event.preventDefault()" onclick="openLinkEditorModal()"><i class="fa-solid fa-link"></i></button>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="toolbar-actions">
+            <span id="save-status" style="font-size:10.5px; font-weight:600; color:#10b981; display:inline-flex; align-items:center; gap:4px; margin-right:4px;">
+                <i class="fa-solid fa-cloud"></i> Synced
+            </span>
+            <button class="download-btn" type="button" id="save-cv-cloud-btn" title="Save CV to MongoDB" onclick="saveCVToDatabase()" style="background:#10b981;">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Save
+            </button>
+            <button class="history-trigger-btn" type="button" id="preview-mode-btn" title="Toggle Clean Preview Mode" onclick="togglePreviewMode()">
+                <i class="fa-solid fa-eye"></i> Preview
+            </button>
+            <button class="download-btn" type="button" title="Download PDF Resume" onclick="downloadPDF()"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+            <button class="download-btn" type="button" title="Download Word Resume" onclick="downloadWord()"><i class="fa-solid fa-file-word"></i> Word</button>
+        </div>
+    </div>
+
+    <div class="page" id="resume-content">
+
+        <div class="header-container">
+            <h1 contenteditable="true">Ashirwad Kumar</h1>
+            <div class="address-sub">
+                <span contenteditable="true" class="area-span" title="Area / Locality (Optional)">[Area]</span>, <span contenteditable="true" title="District">Patna</span>, <span contenteditable="true" title="State">Bihar</span> <span contenteditable="true" title="Pincode">800008</span>
+            </div>
+            <div class="contact">
+                <span><i class="fa-solid fa-phone"></i><span contenteditable="true">+91 6204938006</span></span> |
+                <span><i class="fa-solid fa-envelope"></i><a href="mailto:ashirwad682@gmail.com" class="editable-link">ashirwad682@gmail.com</a></span> |
+                <span><i class="fa-brands fa-linkedin"></i><a href="https://linkedin.com/in/ashirwadkumar1" target="_blank" class="editable-link">LinkedIn</a></span> |
+                <span><i class="fa-brands fa-github"></i><a href="https://github.com/ashirwad682" target="_blank" class="editable-link">GitHub</a></span> |
+                <span><i class="fa-solid fa-globe"></i><a href="https://ashirwadk-portfolio.netlify.app" target="_blank" class="editable-link">Portfolio</a></span>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        <h2>
+            <span>Projects</span>
+            <button class="add-btn no-export" onclick="openAddProjectModal()"><i class="fa-solid fa-plus"></i> Add Project</button>
+        </h2>
+
+        <div id="projects-container">
+            <div class="item">
+                <div class="title" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span style="font-weight:bold; font-size:12.5px;" contenteditable="true">AI-Powered Online Examination & Proctoring System</span>
+                        &nbsp;|&nbsp;
+                        <span style="font-weight:normal; font-size:10.5px; color:#333;" contenteditable="true">React.js, Node.js, Express.js, MongoDB, Socket.io</span>
+                        &nbsp;|&nbsp;
+                        <a href="https://github.com/ashirwad682/Invigilo.git" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-brands fa-github"></i></a>
+                        &nbsp;|&nbsp;
+                        <a href="https://invigilo-ai.vercel.app" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>
+                    </span>
+                    <span style="font-weight:bold; font-size:12.5px; white-space:nowrap; margin-left:12px;" contenteditable="true">Mar 2026</span>
+                    <span class="delete-btn no-export" title="Delete Project" onclick="removeItem(this.closest('.item'), 'Deleted Project: AI-Powered Examination System')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <ul>
+                    <li><span contenteditable="true">Developed a secure examination platform using React.js, Node.js, Express.js, MongoDB, and Socket.io.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true">Implemented AI-powered proctoring including face tracking, screen recording, live monitoring, and automated evaluation.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true">Designed role-based dashboards for Students, Faculty, Institutes, and Administrators with secure authentication.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true">Optimized backend APIs and real-time communication for improved scalability and performance.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true"><b>GitHub Repository:</b> </span><a href="https://github.com/ashirwad682/Invigilo.git" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;">https://github.com/ashirwad682/Invigilo.git</a><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <div class="title" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span style="font-weight:bold; font-size:12.5px;" contenteditable="true">PepsiCo Distributor Management Portal</span>
+                        &nbsp;|&nbsp;
+                        <span style="font-weight:normal; font-size:10.5px; color:#333;" contenteditable="true">React.js, Supabase, Node.js, Razorpay, Framer Motion</span>
+                        &nbsp;|&nbsp;
+                        <a href="https://github.com/ashirwad682/pepsico-project.git" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-brands fa-github"></i></a>
+                        &nbsp;|&nbsp;
+                        <a href="https://pepsico-frontend.vercel.app" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>
+                    </span>
+                    <span style="font-weight:bold; font-size:12.5px; white-space:nowrap; margin-left:12px;" contenteditable="true">Feb 2026</span>
+                    <span class="delete-btn no-export" title="Delete Project" onclick="removeItem(this.closest('.item'), 'Deleted Project: PepsiCo Distributor Portal')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <ul>
+                    <li><span contenteditable="true">Architected a full-scale B2B supply chain and distribution portal for a PepsiCo-authorised distributor; streamlined ordering, payments, logistics, and workforce management.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true">Designed a scalable role-based access system supporting Admins, Retailers, Delivery Partners, and Warehouse Staff.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true">Built a dynamic e-commerce engine with cart, checkout, Razorpay integration, and quantity-based discount logic; engineered real-time logistics tracking with OTP verification.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true">Engineered a financial reconciliation and analytics dashboard with automated settlement tracking.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true"><b>GitHub Repository:</b> </span><a href="https://github.com/ashirwad682/pepsico-project.git" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;">https://github.com/ashirwad682/pepsico-project.git</a><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Training Section -->
+        <h2>
+            <span>Training</span>
+            <button class="add-btn no-export" onclick="openAddTrainingModal()"><i class="fa-solid fa-plus"></i> Add Training</button>
+        </h2>
+        <div id="training-container">
+            <div class="item">
+                <div class="subtitle" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px;">
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <span contenteditable="true"><b>Think Design Prototype – Design Thinking (Figma)</b> | Lovely Professional University, CPE</span>
+                        &nbsp;|&nbsp;
+                        <a href="https://certificate-link.example.com" target="_blank" class="editable-link" title="View Training Certificate" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-certificate"></i></a>
+                        &nbsp;|&nbsp;
+                        <a href="https://groww-prototype.example.com" target="_blank" class="editable-link" title="View Live Project Prototype" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>
+                    </span>
+                    <span style="white-space: nowrap; font-weight: bold; margin-left: 8px;" contenteditable="true">Jun 2025 – Jul 2025</span>
+                    <span class="delete-btn no-export" title="Delete Training" onclick="removeItem(this.closest('.item'), 'Deleted Training entry')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <ul>
+                    <li><span contenteditable="true">Created and prototyped a vaccination reminder feature for the Groww app using Figma, applying user-centred design principles during a summer training project.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Training bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true">Developed a tool that notifies users about upcoming vaccination schedules and provides reminders to ensure timely completion of vaccination doses.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Training bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    <li><span contenteditable="true">Demonstrated UI/UX skills in healthcare-focused digital product design, applying design thinking methodology to develop user-centric solutions.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Training bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Certificates Section -->
+        <h2>
+            <span>Certificates</span>
+            <button class="add-btn no-export" onclick="openAddCertificateModal()"><i class="fa-solid fa-plus"></i> Add Certificate</button>
+        </h2>
+        <div id="certificates-container">
+            <div class="cert-row">
+                <div>
+                    <span contenteditable="true"><b>NPTEL Cloud Computing</b></span> — <a href="https://nptel.ac.in" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">NPTEL</a>
+                </div>
+                <span contenteditable="true">Nov 2025</span>
+                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: NPTEL Cloud Computing')"><i class="fa-solid fa-trash-can"></i></span>
+            </div>
+            <div class="cert-row">
+                <div>
+                    <span contenteditable="true"><b>Think Design Prototype - Summer Training on Design Thinking & Figma</b></span> — <a href="https://figma.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Figma</a>
+                </div>
+                <span contenteditable="true">Aug 2025</span>
+                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: Think Design Prototype')"><i class="fa-solid fa-trash-can"></i></span>
+            </div>
+            <div class="cert-row">
+                <div>
+                    <span contenteditable="true"><b>Build Gen AI Apps with No-Code Tools</b></span> — <a href="https://infosys.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Infosys Springboard</a>
+                </div>
+                <span contenteditable="true">Aug 2025</span>
+                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: Gen AI Apps')"><i class="fa-solid fa-trash-can"></i></span>
+            </div>
+            <div class="cert-row">
+                <div>
+                    <span contenteditable="true"><b>ChatGPT-4 Prompt Engineering</b></span> — <a href="https://infosys.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Infosys Springboard</a>
+                </div>
+                <span contenteditable="true">Aug 2025</span>
+                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: ChatGPT-4')"><i class="fa-solid fa-trash-can"></i></span>
+            </div>
+            <div class="cert-row">
+                <div>
+                    <span contenteditable="true"><b>Computational Theory: Language Principle & Finite Automata</b></span> — <a href="https://infosys.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Infosys Springboard</a>
+                </div>
+                <span contenteditable="true">Aug 2025</span>
+                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: Computational Theory')"><i class="fa-solid fa-trash-can"></i></span>
+            </div>
+            <div class="cert-row">
+                <div>
+                    <span contenteditable="true"><b>Packet Switching Networks and Algorithms</b></span> — <a href="https://coursera.org" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Coursera</a>
+                </div>
+                <span contenteditable="true">Oct 2024</span>
+                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: Packet Switching')"><i class="fa-solid fa-trash-can"></i></span>
+            </div>
+        </div>
+
+        <!-- Technical Skills Section -->
+        <h2>Technical Skills</h2>
+        <div class="skills-row" contenteditable="true"><b>Languages:</b> C++, Python, JavaScript, C, PHP, Java, SQL</div>
+        <div class="skills-row" contenteditable="true"><b>Technologies/Frameworks:</b> HTML & CSS, Tailwind CSS, Node.js, React, Express.js</div>
+        <div class="skills-row" contenteditable="true"><b>Tools/Platforms:</b> MySQL, Git + GitHub, MS Excel, VS Code, Postman</div>
+        <div class="skills-row" contenteditable="true"><b>Soft Skills:</b> Problem-Solving, Team Leader, Adaptability</div>
+
+        <!-- Education Section -->
+        <h2>
+            <span>Education</span>
+            <button class="add-btn no-export" onclick="addEducation()"><i class="fa-solid fa-plus"></i> Add Education</button>
+        </h2>
+        <div id="education-container">
+            <div class="item">
+                <div class="title">
+                    <span contenteditable="true">Lovely Professional University</span>
+                    <span contenteditable="true">2023 – Present</span>
+                    <span class="delete-btn no-export" title="Delete Education" onclick="removeItem(this.closest('.item'), 'Deleted Education: LPU')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <div class="subtitle" style="margin-bottom: 4px;">
+                    <span contenteditable="true">Bachelor of Technology – Computer Science and Engineering — CGPA: 6.82</span>
+                    <span contenteditable="true">Punjab, India</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="title">
+                    <span contenteditable="true">Oriental College</span>
+                    <span contenteditable="true">2021 – 2022</span>
+                    <span class="delete-btn no-export" title="Delete Education" onclick="removeItem(this.closest('.item'), 'Deleted Education: Oriental College')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <div class="subtitle" style="margin-bottom: 4px;">
+                    <span contenteditable="true">Intermediate (PCM) — Percentage: 63.4</span>
+                    <span contenteditable="true">Patna, Bihar</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="title">
+                    <span contenteditable="true">St. Anne's High School</span>
+                    <span contenteditable="true">2019 – 2020</span>
+                    <span class="delete-btn no-export" title="Delete Education" onclick="removeItem(this.closest('.item'), 'Deleted Education: St. Anne High School')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <div class="subtitle">
+                    <span contenteditable="true">Matriculation — Percentage: 53</span>
+                    <span contenteditable="true">Patna, Bihar</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Dedicated History Page Overlay Modal -->
+    <div id="history-modal" class="modal-overlay">
+        <div class="modal-card" style="width: 620px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-clock-rotate-left"></i> Change History & Version Audit Log</h3>
+                <button class="modal-close-btn" onclick="closeHistoryModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div style="padding: 12px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+                <div><b>Total Changes Performed:</b> <span id="modal-total-changes">0</span></div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="restore-version-btn" onclick="HistoryManager.undo()"><i class="fa-solid fa-rotate-left"></i> Undo Step</button>
+                    <button class="restore-version-btn" onclick="HistoryManager.redo()"><i class="fa-solid fa-rotate-right"></i> Redo Step</button>
+                    <button class="restore-version-btn" style="background:#ef4444;" onclick="HistoryManager.clearHistory()"><i class="fa-solid fa-trash-can"></i> Clear Log</button>
+                </div>
+            </div>
+            <div class="history-list" id="history-items-container">
+                <!-- Dynamic History Audit List Items -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Dedicated Link Editor & Visit Modal -->
+    <div id="link-editor-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-link"></i> Link Options: Edit or Visit</h3>
+                <button class="modal-close-btn" onclick="closeLinkEditorModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="link-url-input">Target URL (href)</label>
+                    <input type="url" id="link-url-input" class="form-input" placeholder="https://linkedin.com/in/yourprofile" onkeydown="if(event.key === 'Enter') { event.preventDefault(); saveLinkChanges(); }">
+                </div>
+                <div class="form-group" id="link-text-group">
+                    <label for="link-text-input">Display Text</label>
+                    <input type="text" id="link-text-input" class="form-input" placeholder="Link text (e.g. LinkedIn)" onkeydown="if(event.key === 'Enter') { event.preventDefault(); saveLinkChanges(); }">
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: space-between;">
+                <button id="visit-link-btn" class="btn-secondary" style="background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; font-weight: bold;" onclick="visitActiveLink()"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open / Visit Link</button>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn-secondary" onclick="closeLinkEditorModal()">Cancel</button>
+                    <button class="btn-primary" onclick="saveLinkChanges()"><i class="fa-solid fa-check"></i> Save Link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Add Project Modal with Link Options Choice -->
+    <div id="add-project-modal" class="modal-overlay">
+        <div class="modal-card" style="width: 580px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-folder-plus"></i> Add New Project Entry</h3>
+                <button class="modal-close-btn" onclick="closeAddProjectModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-proj-title">Project Title</label>
+                    <input type="text" id="new-proj-title" class="form-input" value="E-Commerce Analytics Platform">
+                </div>
+                <div class="form-group">
+                    <label for="new-proj-tech">Tech Stack / Tools</label>
+                    <input type="text" id="new-proj-tech" class="form-input" value="React.js, Node.js, Express.js, MongoDB">
+                </div>
+                <div class="form-group">
+                    <label for="new-proj-date">Completion Date</label>
+                    <input type="text" id="new-proj-date" class="form-input" value="2026">
+                </div>
+                <div class="form-group">
+                    <label>Which links do you want to display for this project?</label>
+                    <div class="radio-group">
+                        <label class="radio-option"><input type="radio" name="linkChoice" value="both" checked onchange="toggleProjectLinkInputs()"> Both Links (GitHub + Live Website)</label>
+                        <label class="radio-option"><input type="radio" name="linkChoice" value="github" onchange="toggleProjectLinkInputs()"> GitHub Only</label>
+                        <label class="radio-option"><input type="radio" name="linkChoice" value="website" onchange="toggleProjectLinkInputs()"> Live Website Only</label>
+                        <label class="radio-option"><input type="radio" name="linkChoice" value="none" onchange="toggleProjectLinkInputs()"> No Links</label>
+                    </div>
+                </div>
+                <div class="form-group" id="github-url-group">
+                    <label for="new-proj-github">GitHub Repository URL <span class="req-badge" id="gh-req-span">*Required</span></label>
+                    <input type="url" id="new-proj-github" class="form-input" placeholder="https://github.com/yourusername/project">
+                </div>
+                <div class="form-group" id="website-url-group">
+                    <label for="new-proj-website">Live Website URL <span class="req-badge" id="web-req-span">*Required</span></label>
+                    <input type="url" id="new-proj-website" class="form-input" placeholder="https://yourproject.vercel.app">
+                </div>
+                <div class="form-group">
+                    <label for="new-proj-bullet">Initial Description Bullet Point (Project starts with 1 point)</label>
+                    <input type="text" id="new-proj-bullet" class="form-input" value="Engineered real-time data visualization dashboard with automated analytics.">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeAddProjectModal()">Cancel</button>
+                <button class="btn-primary" onclick="confirmCreateProject()"><i class="fa-solid fa-plus"></i> Add Project to Resume</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Add Training Modal with Certificate & Live Project Link Choice -->
+    <div id="add-training-modal" class="modal-overlay">
+        <div class="modal-card" style="width: 580px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-award"></i> Add New Training Entry</h3>
+                <button class="modal-close-btn" onclick="closeAddTrainingModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-train-title">Training Program & Institution Name</label>
+                    <input type="text" id="new-train-title" class="form-input" value="Advanced Full-Stack Development | CPE LPU">
+                </div>
+                <div class="form-group">
+                    <label for="new-train-date">Completion Period</label>
+                    <input type="text" id="new-train-date" class="form-input" value="Jun 2025 – Jul 2025">
+                </div>
+                <div class="form-group">
+                    <label>Which links do you want to display for this training?</label>
+                    <div class="radio-group">
+                        <label class="radio-option"><input type="radio" name="trainLinkChoice" value="both" checked onchange="toggleTrainingLinkInputs()"> Both Links (Certificate Icon + Live Project Icon)</label>
+                        <label class="radio-option"><input type="radio" name="trainLinkChoice" value="cert" onchange="toggleTrainingLinkInputs()"> Certificate Link Only</label>
+                        <label class="radio-option"><input type="radio" name="trainLinkChoice" value="project" onchange="toggleTrainingLinkInputs()"> Live Project Link Only</label>
+                        <label class="radio-option"><input type="radio" name="trainLinkChoice" value="none" onchange="toggleTrainingLinkInputs()"> No Links</label>
+                    </div>
+                </div>
+                <div class="form-group" id="train-cert-url-group">
+                    <label for="new-train-cert">Certificate Link URL</label>
+                    <input type="url" id="new-train-cert" class="form-input" placeholder="https://certificate.example.com">
+                </div>
+                <div class="form-group" id="train-proj-url-group">
+                    <label for="new-train-proj">Live Project / Prototype URL</label>
+                    <input type="url" id="new-train-proj" class="form-input" placeholder="https://liveproject.example.com">
+                </div>
+                <div class="form-group">
+                    <label for="new-train-bullet">Initial Description Point</label>
+                    <input type="text" id="new-train-bullet" class="form-input" value="Completed intensive hands-on practical module and built industry-standard prototype.">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeAddTrainingModal()">Cancel</button>
+                <button class="btn-primary" onclick="confirmCreateTraining()"><i class="fa-solid fa-plus"></i> Add Training to Resume</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Add Certificate Modal -->
+    <div id="add-certificate-modal" class="modal-overlay">
+        <div class="modal-card" style="width: 560px;">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-award"></i> Add New Certificate Entry</h3>
+                <button class="modal-close-btn" onclick="closeAddCertificateModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new-cert-name">Certificate Name (Display Title)</label>
+                    <input type="text" id="new-cert-name" class="form-input" value="NPTEL Cloud Computing" placeholder="e.g. AWS Certified Solutions Architect">
+                </div>
+                <div class="form-group">
+                    <label for="new-cert-issuer">Issuing Organization / Provider</label>
+                    <input type="text" id="new-cert-issuer" class="form-input" value="NPTEL" placeholder="e.g. NPTEL, Coursera, Amazon">
+                </div>
+                <div class="form-group">
+                    <label for="new-cert-url">Certificate Link / Credential Verification URL</label>
+                    <input type="url" id="new-cert-url" class="form-input" placeholder="https://nptel.ac.in/noc/Ecertificate">
+                </div>
+                <div class="form-group">
+                    <label for="new-cert-date">Issue Month & Year</label>
+                    <input type="text" id="new-cert-date" class="form-input" value="Nov 2025" placeholder="e.g. Nov 2025">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeAddCertificateModal()">Cancel</button>
+                <button class="btn-primary" onclick="confirmCreateCertificate()"><i class="fa-solid fa-plus"></i> Add Certificate to Resume</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Handlers -->
+    <script>
+        // Immediate cleanup of old cached localStorage entries and stray code text
+        (function autoCleanCorruptedState() {
+            try {
+                localStorage.removeItem('cv_history_stack');
+                localStorage.removeItem('cv_history_index');
+            } catch(e) {}
+            
+            function cleanAllNodes() {
+                const walker = document.createTreeWalker(document.body || document.documentElement, NodeFilter.SHOW_ALL, null, false);
+                const toRemove = [];
+                let node;
+                while (node = walker.nextNode()) {
+                    if (node.nodeType === 3 && node.nodeValue && (node.nodeValue.includes('sourceHTML') || node.nodeValue.includes('fileDownload'))) {
+                        toRemove.push(node);
+                    } else if (node.nodeType === 1 && node.innerHTML && (node.innerHTML.includes('sourceHTML') || node.innerHTML.includes('fileDownload')) && !['SCRIPT', 'STYLE'].includes(node.tagName)) {
+                        node.innerHTML = node.innerHTML
+                            .replace(/['"]\s*;\s*const sourceHTML = [\s\S]*$/gi, '')
+                            .replace(/'; const sourceHTML[\s\S]*/gi, '')
+                            .replace(/const sourceHTML = [\s\S]*$/gi, '');
+                    }
+                }
+                toRemove.forEach(n => n.remove());
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', cleanAllNodes);
+            } else {
+                cleanAllNodes();
+            }
+        })();
+
+        // Project Bullet Point Count Constraints (Min 1, Max 5)
+        function updateProjectBulletControls(item) {
+            if (!item) return;
+            const ul = item.querySelector('ul');
+            if (!ul) return;
+
+            const lis = ul.querySelectorAll('li');
+            const count = lis.length;
+
+            // Min 1 Constraint: Hide delete button on bullet point if only 1 point remains
+            lis.forEach(li => {
+                const delBtn = li.querySelector('.delete-btn');
+                if (delBtn) {
+                    delBtn.style.display = (count <= 1) ? 'none' : '';
+                }
+            });
+
+            // Max 5 Constraint: Manage + Add Point button under project UL
+            let addBulletBtn = item.querySelector('.add-bullet-btn');
+            if (!addBulletBtn) {
+                addBulletBtn = document.createElement('button');
+                addBulletBtn.className = 'add-bullet-btn no-export';
+                addBulletBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Add Point';
+                addBulletBtn.onclick = function() { addBulletPointToProject(this); };
+                ul.after(addBulletBtn);
+            }
+
+            if (count >= 5) {
+                addBulletBtn.style.display = 'none';
+            } else {
+                addBulletBtn.style.display = 'inline-block';
+            }
+        }
+
+        function addBulletPointToProject(btn) {
+            const item = btn.closest('.item');
+            const ul = item.querySelector('ul');
+            const lis = ul.querySelectorAll('li');
+            const count = lis.length;
+
+            if (count < 5) {
+                const newLi = document.createElement('li');
+                newLi.innerHTML = `<span contenteditable="true">Describe key achievement or feature here.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span>`;
+                
+                // Keep GitHub link bullet point ALWAYS at the very LAST position
+                const lastLi = lis[lis.length - 1];
+                if (lastLi && (lastLi.innerText.includes('GitHub') || lastLi.querySelector('a[href*="github.com"]'))) {
+                    ul.insertBefore(newLi, lastLi);
+                } else {
+                    ul.appendChild(newLi);
+                }
+
+                updateProjectBulletControls(item);
+                HistoryManager.pushState('Added bullet point to Project');
+            }
+        }
+
+        function updateAllProjectsBulletControls() {
+            const projects = document.querySelectorAll('#projects-container .item');
+            projects.forEach(proj => updateProjectBulletControls(proj));
+        }
+
+        // Training Bullet Point Count Constraints (Min 1, Max 3)
+        function updateTrainingBulletControls(item) {
+            if (!item) return;
+            const ul = item.querySelector('ul');
+            if (!ul) return;
+
+            const lis = ul.querySelectorAll('li');
+            const count = lis.length;
+
+            // Min 1 Constraint: Hide delete button if only 1 point remains
+            lis.forEach(li => {
+                const delBtn = li.querySelector('.delete-btn');
+                if (delBtn) {
+                    delBtn.style.display = (count <= 1) ? 'none' : '';
+                }
+            });
+
+            // Max 3 Constraint: Manage + Add Point button under training UL
+            let addBulletBtn = item.querySelector('.add-bullet-btn');
+            if (!addBulletBtn) {
+                addBulletBtn = document.createElement('button');
+                addBulletBtn.className = 'add-bullet-btn no-export';
+                addBulletBtn.innerHTML = '<i class="fa-solid fa-plus"></i> Add Point';
+                addBulletBtn.onclick = function() { addBulletPointToTraining(this); };
+                ul.after(addBulletBtn);
+            }
+
+            if (count >= 3) {
+                addBulletBtn.style.display = 'none';
+            } else {
+                addBulletBtn.style.display = 'inline-block';
+            }
+        }
+
+        function addBulletPointToTraining(btn) {
+            const item = btn.closest('.item');
+            const ul = item.querySelector('ul');
+            if (!ul) return;
+            const lis = ul.querySelectorAll('li');
+            const count = lis.length;
+
+            if (count < 3) {
+                const newLi = document.createElement('li');
+                newLi.innerHTML = `<span contenteditable="true">Describe key training outcome or skill learned here.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Training bullet point')"><i class="fa-solid fa-trash-can"></i></span>`;
+                ul.appendChild(newLi);
+
+                updateTrainingBulletControls(item);
+                HistoryManager.pushState('Added bullet point to Training');
+            }
+        }
+
+        function updateAllTrainingBulletControls() {
+            const trainingItems = document.querySelectorAll('#training-container .item');
+            trainingItems.forEach(item => updateTrainingBulletControls(item));
+        }
+
+        // Link Editing & Visiting System (Single-Click Edit, Double-Click Open)
+        let activeEditingLink = null;
+        let clickTimer = null;
+
+        function attachLinkClickListeners() {
+            const links = document.querySelectorAll('#resume-content a');
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                const isValidUrl = href && href.trim() !== '' && href.trim() !== '#' && href.trim() !== 'javascript:void(0)';
+
+                link.title = 'Single-click to EDIT link | Double-click to OPEN target URL';
+
+                // Single Click Handler -> Open Edit Modal in Edit mode, or Visit Link in Preview mode
+                link.onclick = (e) => {
+                    e.preventDefault();
+
+                    const isPreviewMode = document.body.classList.contains('preview-mode-active');
+                    const currentHref = link.getAttribute('href');
+                    const hasValidHref = currentHref && currentHref.trim() !== '' && currentHref.trim() !== '#' && currentHref.trim() !== 'javascript:void(0)';
+
+                    if (isPreviewMode) {
+                        if (hasValidHref) {
+                            window.open(currentHref.trim(), '_blank');
+                        } else {
+                            alert('No URL specified for this link yet.');
+                        }
+                        return;
+                    }
+
+                    if (clickTimer) {
+                        clearTimeout(clickTimer);
+                        clickTimer = null;
+                        return; // Handled by dblclick
+                    }
+
+                    clickTimer = setTimeout(() => {
+                        clickTimer = null;
+
+                        activeEditingLink = link;
+                        const isIconLink = (link.querySelector('i, svg, img') !== null) || (link.innerText.trim() === '');
+                        const textGroup = document.getElementById('link-text-group');
+
+                        document.getElementById('link-url-input').value = hasValidHref ? currentHref.trim() : '';
+
+                        if (isIconLink) {
+                            if (textGroup) textGroup.style.display = 'none';
+                        } else {
+                            if (textGroup) textGroup.style.display = 'block';
+                            document.getElementById('link-text-input').value = link.innerText.trim();
+                        }
+
+                        const visitBtn = document.getElementById('visit-link-btn');
+                        if (visitBtn) {
+                            visitBtn.disabled = !hasValidHref;
+                            visitBtn.style.opacity = hasValidHref ? '1' : '0.5';
+                            visitBtn.title = hasValidHref ? 'Open target URL in new tab' : 'No link URL specified yet';
+                        }
+
+                        document.getElementById('link-editor-modal').classList.add('active');
+                        setTimeout(() => {
+                            const urlInp = document.getElementById('link-url-input');
+                            if (urlInp) {
+                                urlInp.focus();
+                                urlInp.select();
+                            }
+                        }, 50);
+                    }, 240);
+                };
+
+                // Double Click Handler -> Open Target URL directly
+                link.ondblclick = (e) => {
+                    e.preventDefault();
+
+                    if (clickTimer) {
+                        clearTimeout(clickTimer);
+                        clickTimer = null;
+                    }
+
+                    const currentHref = link.getAttribute('href');
+                    const hasValidHref = currentHref && currentHref.trim() !== '' && currentHref.trim() !== '#' && currentHref.trim() !== 'javascript:void(0)';
+
+                    if (hasValidHref) {
+                        window.open(currentHref.trim(), '_blank');
+                    } else {
+                        alert('No link URL has been set for this item yet. Single-click on the link to edit its URL.');
+                    }
+                };
+            });
+        }
+
+        function visitActiveLink() {
+            const urlInput = document.getElementById('link-url-input');
+            const url = urlInput ? urlInput.value.trim() : '';
+            if (url && url !== '#' && url !== 'javascript:void(0)') {
+                window.open(url, '_blank');
+            } else {
+                alert('No link URL has been set for this item yet. Please enter a valid URL above and click Save Link.');
+            }
+        }
+
+        function openLinkEditorModal() {
+            const sel = window.getSelection();
+            if (sel.rangeCount > 0) {
+                let node = sel.anchorNode;
+                if (node.nodeType === 3) node = node.parentNode;
+                const link = node.closest('a');
+                if (link) {
+                    activeEditingLink = link;
+                    const href = link.getAttribute('href');
+                    const isValidUrl = href && href.trim() !== '' && href.trim() !== '#' && href.trim() !== 'javascript:void(0)';
+                    const isIconLink = (link.querySelector('i, svg, img') !== null) || (link.innerText.trim() === '');
+                    const textGroup = document.getElementById('link-text-group');
+
+                    document.getElementById('link-url-input').value = isValidUrl ? href.trim() : '';
+
+                    if (isIconLink) {
+                        if (textGroup) textGroup.style.display = 'none';
+                    } else {
+                        if (textGroup) textGroup.style.display = 'block';
+                        document.getElementById('link-text-input').value = link.innerText.trim();
+                    }
+
+                    const visitBtn = document.getElementById('visit-link-btn');
+                    if (visitBtn) {
+                        visitBtn.disabled = !isValidUrl;
+                        visitBtn.style.opacity = isValidUrl ? '1' : '0.5';
+                    }
+
+                    document.getElementById('link-editor-modal').classList.add('active');
+                    setTimeout(() => {
+                        const urlInp = document.getElementById('link-url-input');
+                        if (urlInp) {
+                            urlInp.focus();
+                            urlInp.select();
+                        }
+                    }, 50);
+                    return;
+                }
+            }
+            alert('Please click directly on any link (LinkedIn, GitHub, Portfolio, Email, Project links) to edit or visit its URL.');
+        }
+
+        function closeLinkEditorModal() {
+            document.getElementById('link-editor-modal').classList.remove('active');
+            activeEditingLink = null;
+        }
+
+        function saveLinkChanges() {
+            if (!activeEditingLink) return;
+            const newUrl = document.getElementById('link-url-input').value.trim();
+
+            if (newUrl) {
+                activeEditingLink.setAttribute('href', newUrl);
+            } else {
+                activeEditingLink.setAttribute('href', '#');
+            }
+
+            const isIconLink = (activeEditingLink.querySelector('i, svg, img') !== null) || (activeEditingLink.innerText.trim() === '');
+            if (!isIconLink) {
+                const newText = document.getElementById('link-text-input').value.trim();
+                if (newText) {
+                    activeEditingLink.innerText = newText;
+                }
+            }
+
+            closeLinkEditorModal();
+            attachLinkClickListeners();
+            HistoryManager.pushState(`Updated link URL for "${newUrl}"`);
+        }
+
+        // Add Project Modal & Strict URL Validation Logic
+        function openAddProjectModal() {
+            document.getElementById('add-project-modal').classList.add('active');
+            toggleProjectLinkInputs();
+        }
+
+        function closeAddProjectModal() {
+            document.getElementById('add-project-modal').classList.remove('active');
+        }
+
+        function toggleProjectLinkInputs() {
+            const choice = document.querySelector('input[name="linkChoice"]:checked').value;
+            const ghGroup = document.getElementById('github-url-group');
+            const webGroup = document.getElementById('website-url-group');
+
+            if (choice === 'both') {
+                ghGroup.style.display = 'block';
+                webGroup.style.display = 'block';
+            } else if (choice === 'github') {
+                ghGroup.style.display = 'block';
+                webGroup.style.display = 'none';
+            } else if (choice === 'website') {
+                ghGroup.style.display = 'none';
+                webGroup.style.display = 'block';
+            } else {
+                ghGroup.style.display = 'none';
+                webGroup.style.display = 'none';
+            }
+        }
+
+        function confirmCreateProject() {
+            const title = document.getElementById('new-proj-title').value.trim() || 'New Project';
+            const tech = document.getElementById('new-proj-tech').value.trim() || 'Tech Stack';
+            const date = document.getElementById('new-proj-date').value.trim() || '2026';
+            const bullet = document.getElementById('new-proj-bullet').value.trim() || 'Project achievement details';
+            const choice = document.querySelector('input[name="linkChoice"]:checked').value;
+            const ghUrlInput = document.getElementById('new-proj-github');
+            const webUrlInput = document.getElementById('new-proj-website');
+            const ghUrl = ghUrlInput.value.trim();
+            const webUrl = webUrlInput.value.trim();
+
+            // Strict URL requirement validation according to selected link section
+            if (choice === 'both') {
+                if (!ghUrl || !webUrl) {
+                    alert('Please enter BOTH the GitHub Repository URL and Live Website URL before adding the project.');
+                    if (!ghUrl) ghUrlInput.focus();
+                    else if (!webUrl) webUrlInput.focus();
+                    return;
+                }
+            } else if (choice === 'github') {
+                if (!ghUrl) {
+                    alert('Please enter the GitHub Repository URL before adding the project.');
+                    ghUrlInput.focus();
+                    return;
+                }
+            } else if (choice === 'website') {
+                if (!webUrl) {
+                    alert('Please enter the Live Website URL before adding the project.');
+                    webUrlInput.focus();
+                    return;
+                }
+            }
+
+            let linksHTML = '';
+            if (choice === 'both') {
+                linksHTML = `&nbsp;|&nbsp;<a href="${ghUrl}" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-brands fa-github"></i></a>&nbsp;|&nbsp;<a href="${webUrl}" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>`;
+            } else if (choice === 'github') {
+                linksHTML = `&nbsp;|&nbsp;<a href="${ghUrl}" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-brands fa-github"></i></a>`;
+            } else if (choice === 'website') {
+                linksHTML = `&nbsp;|&nbsp;<a href="${webUrl}" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>`;
+            }
+
+            let extraGithubBulletHTML = '';
+            if (ghUrl) {
+                extraGithubBulletHTML = `<li><span contenteditable="true"><b>GitHub Repository:</b> </span><a href="${ghUrl}" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;">${ghUrl}</a><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>`;
+            }
+
+            const container = document.getElementById('projects-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'item';
+            newItem.innerHTML = `
+                <div class="title" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <span style="font-weight:bold; font-size:12.5px;" contenteditable="true">${title}</span>
+                        &nbsp;|&nbsp;
+                        <span style="font-weight:normal; font-size:10.5px; color:#333;" contenteditable="true">${tech}</span>
+                        ${linksHTML}
+                    </span>
+                    <span style="font-weight:bold; font-size:12.5px; white-space:nowrap; margin-left:12px;" contenteditable="true">${date}</span>
+                    <span class="delete-btn no-export" title="Delete Project" onclick="removeItem(this.closest('.item'), 'Deleted Project: ${title}')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <ul>
+                    <li><span contenteditable="true">${bullet}</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Project bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                    ${extraGithubBulletHTML}
+                </ul>
+            `;
+            container.appendChild(newItem);
+            updateProjectBulletControls(newItem);
+            attachLinkClickListeners();
+            closeAddProjectModal();
+            HistoryManager.pushState(`Added Project: ${title}`);
+        }
+
+        // Training Modal Handlers
+        function openAddTrainingModal() {
+            document.getElementById('add-training-modal').classList.add('active');
+            toggleTrainingLinkInputs();
+        }
+
+        function closeAddTrainingModal() {
+            document.getElementById('add-training-modal').classList.remove('active');
+        }
+
+        function toggleTrainingLinkInputs() {
+            const choiceEl = document.querySelector('input[name="trainLinkChoice"]:checked');
+            if (!choiceEl) return;
+            const choice = choiceEl.value;
+
+            const certGroup = document.getElementById('train-cert-url-group');
+            const projGroup = document.getElementById('train-proj-url-group');
+
+            if (choice === 'both') {
+                certGroup.style.display = 'block';
+                projGroup.style.display = 'block';
+            } else if (choice === 'cert') {
+                certGroup.style.display = 'block';
+                projGroup.style.display = 'none';
+            } else if (choice === 'project') {
+                certGroup.style.display = 'none';
+                projGroup.style.display = 'block';
+            } else {
+                certGroup.style.display = 'none';
+                projGroup.style.display = 'none';
+            }
+        }
+
+        function confirmCreateTraining() {
+            const titleInput = document.getElementById('new-train-title');
+            const dateInput = document.getElementById('new-train-date');
+            const certInput = document.getElementById('new-train-cert');
+            const projInput = document.getElementById('new-train-proj');
+            const bulletInput = document.getElementById('new-train-bullet');
+
+            const title = titleInput.value.trim();
+            const date = dateInput.value.trim() || 'Jun 2025 – Jul 2025';
+            const certUrl = certInput.value.trim();
+            const projUrl = projInput.value.trim();
+            const bullet = bulletInput.value.trim() || 'Completed intensive practical module and built industry prototype.';
+
+            if (!title) {
+                alert('Please enter a Training Title before proceeding.');
+                titleInput.focus();
+                return;
+            }
+
+            const choice = document.querySelector('input[name="trainLinkChoice"]:checked').value;
+
+            let linksHTML = '';
+            if (choice === 'both') {
+                linksHTML = `&nbsp;|&nbsp;<a href="${certUrl || '#'}" target="_blank" class="editable-link" title="View Training Certificate" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-certificate"></i></a>&nbsp;|&nbsp;<a href="${projUrl || '#'}" target="_blank" class="editable-link" title="View Live Project Prototype" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>`;
+            } else if (choice === 'cert') {
+                linksHTML = `&nbsp;|&nbsp;<a href="${certUrl || '#'}" target="_blank" class="editable-link" title="View Training Certificate" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-certificate"></i></a>`;
+            } else if (choice === 'project') {
+                linksHTML = `&nbsp;|&nbsp;<a href="${projUrl || '#'}" target="_blank" class="editable-link" title="View Live Project Prototype" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>`;
+            }
+
+            const container = document.getElementById('training-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'item';
+            newItem.innerHTML = `
+                <div class="subtitle" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px;">
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <span contenteditable="true"><b>${title}</b></span>
+                        ${linksHTML}
+                    </span>
+                    <span style="white-space: nowrap; font-weight: bold; margin-left: 8px;" contenteditable="true">${date}</span>
+                    <span class="delete-btn no-export" title="Delete Training" onclick="removeItem(this.closest('.item'), 'Deleted Training entry')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <ul>
+                    <li><span contenteditable="true">${bullet}</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Training bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                </ul>
+            `;
+            container.appendChild(newItem);
+            autoSortAllSections();
+            attachLinkClickListeners();
+            closeAddTrainingModal();
+            HistoryManager.pushState(`Added Training: ${title}`);
+        }
+
+        // Certificate Modal Handlers
+        function openAddCertificateModal() {
+            document.getElementById('add-certificate-modal').classList.add('active');
+        }
+
+        function closeAddCertificateModal() {
+            document.getElementById('add-certificate-modal').classList.remove('active');
+        }
+
+        function confirmCreateCertificate() {
+            const nameInput = document.getElementById('new-cert-name');
+            const issuerInput = document.getElementById('new-cert-issuer');
+            const urlInput = document.getElementById('new-cert-url');
+            const dateInput = document.getElementById('new-cert-date');
+
+            const certName = nameInput ? nameInput.value.trim() : 'Certificate Name';
+            const issuer = issuerInput ? issuerInput.value.trim() : 'Issuer';
+            const url = urlInput ? urlInput.value.trim() || '#' : '#';
+            const date = dateInput ? dateInput.value.trim() || 'Nov 2025' : 'Nov 2025';
+
+            if (!certName) {
+                alert('Please enter a Certificate Name before proceeding.');
+                if (nameInput) nameInput.focus();
+                return;
+            }
+
+            const displayText = issuer ? `<span contenteditable="true"><b>${certName}</b></span> — <a href="${url}" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">${issuer}</a>` : `<span contenteditable="true"><b>${certName}</b></span>`;
+
+            const container = document.getElementById('certificates-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'cert-row';
+            newItem.innerHTML = `
+                <div>${displayText}</div>
+                <span contenteditable="true">${date}</span>
+                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: ${certName}')"><i class="fa-solid fa-trash-can"></i></span>
+            `;
+            container.appendChild(newItem);
+            autoSortAllSections();
+            attachLinkClickListeners();
+            closeAddCertificateModal();
+            HistoryManager.pushState(`Added Certificate: ${certName}`);
+        }
+
+        function ensureCertificateLinksPresent() {
+            const certContainer = document.getElementById('certificates-container');
+            if (!certContainer) return;
+
+            const certRows = certContainer.querySelectorAll('.cert-row');
+            certRows.forEach(row => {
+                const icons = row.querySelectorAll('a i.fa-arrow-up-right-from-square');
+                icons.forEach(ic => ic.remove());
+
+                const firstSpan = row.querySelector('span[contenteditable]');
+                if (firstSpan && firstSpan.getAttribute('contenteditable') === 'true' && firstSpan.innerHTML.includes('—')) {
+                    const fullHTML = firstSpan.innerHTML;
+                    const parts = fullHTML.split('—');
+                    const titlePart = parts[0].trim();
+                    let issuerPart = parts.slice(1).join('—').trim();
+                    let oldHref = '#';
+                    const anchorMatch = firstSpan.querySelector('a');
+                    if (anchorMatch) {
+                        oldHref = anchorMatch.getAttribute('href') || '#';
+                        issuerPart = anchorMatch.innerHTML.replace(/<i[^>]*><\/i>/gi, '').trim();
+                    }
+                    
+                    const wrapperDiv = document.createElement('div');
+                    wrapperDiv.innerHTML = `<span contenteditable="true">${titlePart.startsWith('<b>') ? titlePart : `<b>${titlePart}</b>`}</span> — <a href="${oldHref}" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">${issuerPart}</a>`;
+                    firstSpan.replaceWith(wrapperDiv);
+                }
+            });
+        }
+
+        // Automatic Date Sorting Engine (Latest top, Oldest bottom)
+        const MONTH_MAP = {
+            jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6,
+            jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12
+        };
+
+        function parseDateWeight(dateText) {
+            if (!dateText) return 0;
+            const str = dateText.trim().toLowerCase();
+
+            if (str.includes('present') || str.includes('current')) {
+                return 999999;
+            }
+
+            const yearMatches = str.match(/\b(19|20)\d{2}\b/g);
+            if (!yearMatches || yearMatches.length === 0) return 0;
+
+            const year = parseInt(yearMatches[yearMatches.length - 1], 10);
+
+            let month = 1;
+            for (const [mName, mVal] of Object.entries(MONTH_MAP)) {
+                if (str.includes(mName)) {
+                    month = mVal;
+                }
+            }
+
+            return year * 100 + month;
+        }
+
+        function getItemDateText(itemElement) {
+            if (!itemElement) return '';
+            const allElements = itemElement.querySelectorAll('*');
+            for (let i = allElements.length - 1; i >= 0; i--) {
+                const text = (allElements[i].innerText || allElements[i].textContent || '').trim();
+                if (/\b(19|20)\d{2}\b/i.test(text) || /present|current/i.test(text)) {
+                    return text;
+                }
+            }
+            return itemElement.innerText || itemElement.textContent || '';
+        }
+
+        function sortContainerItems(containerId, itemSelector) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const items = Array.from(container.querySelectorAll(itemSelector));
+            if (items.length <= 1) return;
+
+            items.sort((a, b) => {
+                const dateA = getItemDateText(a);
+                const dateB = getItemDateText(b);
+                const weightA = parseDateWeight(dateA);
+                const weightB = parseDateWeight(dateB);
+                return weightB - weightA;
+            });
+
+            items.forEach(item => container.appendChild(item));
+        }
+
+        function getCaretOffset(element) {
+            let caretOffset = 0;
+            const sel = window.getSelection();
+            if (sel && sel.rangeCount > 0) {
+                const range = sel.getRangeAt(0);
+                const preCaretRange = range.cloneRange();
+                preCaretRange.selectNodeContents(element);
+                preCaretRange.setEnd(range.endContainer, range.endOffset);
+                caretOffset = preCaretRange.toString().length;
+            }
+            return caretOffset;
+        }
+
+        function setCaretOffset(element, offset) {
+            const range = document.createRange();
+            const sel = window.getSelection();
+            let currentLen = 0;
+            let nodeToSelect = null;
+            let offsetInNode = 0;
+
+            function walk(node) {
+                if (node.nodeType === 3) {
+                    const len = node.textContent.length;
+                    if (currentLen + len >= offset) {
+                        nodeToSelect = node;
+                        offsetInNode = offset - currentLen;
+                        return true;
+                    }
+                    currentLen += len;
+                } else {
+                    for (let child of node.childNodes) {
+                        if (walk(child)) return true;
+                    }
+                }
+                return false;
+            }
+
+            walk(element);
+
+            if (nodeToSelect) {
+                range.setStart(nodeToSelect, offsetInNode);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        }
+
+        function autoSortAllSections(preserveFocus = false) {
+            const shouldPreserve = (preserveFocus === true);
+            const activeEl = document.activeElement;
+            let caretOffset = 0;
+            const isEditing = (activeEl && activeEl.isContentEditable && document.getElementById('resume-content').contains(activeEl));
+
+            if (shouldPreserve && isEditing) {
+                caretOffset = getCaretOffset(activeEl);
+            }
+
+            sortContainerItems('projects-container', '.item');
+            sortContainerItems('training-container', '.item');
+            sortContainerItems('certificates-container', '.cert-row');
+            sortContainerItems('education-container', '.item');
+
+            if (shouldPreserve && isEditing && activeEl && document.body.contains(activeEl)) {
+                activeEl.focus();
+                try {
+                    setCaretOffset(activeEl, caretOffset);
+                } catch(e) {}
+            }
+        }
+
+        function ensureTrainingLogosPresent() {
+            const trainingContainer = document.getElementById('training-container');
+            if (!trainingContainer) return;
+
+            const items = trainingContainer.querySelectorAll('.item');
+            items.forEach(item => {
+                const subtitle = item.querySelector('.subtitle');
+                if (subtitle) {
+                    const firstSpan = subtitle.querySelector('span');
+                    if (firstSpan) {
+                        if (firstSpan.innerHTML.includes('Center for Professional Enhancement')) {
+                            firstSpan.innerHTML = firstSpan.innerHTML.replace('Center for Professional Enhancement', 'CPE');
+                        }
+                        if (!subtitle.querySelector('.fa-certificate')) {
+                            const certAnchor = document.createElement('a');
+                            certAnchor.href = "https://certificate-link.example.com";
+                            certAnchor.target = "_blank";
+                            certAnchor.className = "editable-link";
+                            certAnchor.title = "View Training Certificate";
+                            certAnchor.style.cssText = "font-size:11px; color:#0066cc; text-decoration:none;";
+                            certAnchor.innerHTML = '<i class="fa-solid fa-certificate"></i>';
+
+                            const projAnchor = document.createElement('a');
+                            projAnchor.href = "https://groww-prototype.example.com";
+                            projAnchor.target = "_blank";
+                            projAnchor.className = "editable-link";
+                            projAnchor.title = "View Live Project Prototype";
+                            projAnchor.style.cssText = "font-size:11px; color:#0066cc; text-decoration:none;";
+                            projAnchor.innerHTML = '<i class="fa-solid fa-globe"></i>';
+
+                            firstSpan.appendChild(document.createTextNode(' | '));
+                            firstSpan.appendChild(certAnchor);
+                            firstSpan.appendChild(document.createTextNode(' | '));
+                            firstSpan.appendChild(projAnchor);
+                        }
+                    }
+                }
+            });
+        }
+
+        function ensureAddress4PartsPresent() {
+            const addressDiv = document.querySelector('.address-sub');
+            if (!addressDiv) return;
+
+            if (addressDiv.getAttribute('contenteditable') === 'true' || addressDiv.querySelectorAll('span').length < 4) {
+                const text = (addressDiv.innerText || addressDiv.textContent || '').trim();
+                addressDiv.removeAttribute('contenteditable');
+
+                let area = '[Area]';
+                let district = 'Patna';
+                let state = 'Bihar';
+                let pincode = '800008';
+
+                const pinMatch = text.match(/\b\d{6}\b/);
+                if (pinMatch) pincode = pinMatch[0];
+
+                const cleanText = text.replace(/\b\d{6}\b/, '');
+                const parts = cleanText.split(',').map(s => s.trim()).filter(Boolean);
+
+                if (parts.length >= 3) {
+                    area = parts[0];
+                    district = parts[1];
+                    state = parts[2];
+                } else if (parts.length === 2) {
+                    district = parts[0];
+                    state = parts[1];
+                } else if (parts.length === 1) {
+                    district = parts[0];
+                }
+
+                if (!area || area.toLowerCase() === 'area') {
+                    area = '[Area]';
+                }
+
+                addressDiv.innerHTML = `<span contenteditable="true" class="area-span" title="Area / Locality (Optional)">${area}</span>, <span contenteditable="true" title="District">${district}</span>, <span contenteditable="true" title="State">${state}</span> <span contenteditable="true" title="Pincode">${pincode}</span>`;
+            }
+        }
+
+        function unpaginateLiveA4Pages() {
+            const mainPage = document.getElementById('resume-content');
+            if (!mainPage) return;
+
+            const extraSheets = document.querySelectorAll('.page-sheet-extra');
+            extraSheets.forEach(sheet => {
+                while (sheet.firstChild) {
+                    if (sheet.firstChild.classList && sheet.firstChild.classList.contains('sheet-footer-tag')) {
+                        sheet.firstChild.remove();
+                    } else {
+                        mainPage.appendChild(sheet.firstChild);
+                    }
+                }
+                sheet.remove();
+            });
+
+            document.querySelectorAll('.sheet-footer-tag').forEach(f => f.remove());
+        }
+
+        function getFullFlattenedHTML() {
+            const mainPage = document.getElementById('resume-content');
+            if (!mainPage) return '';
+
+            // Unpaginate extra sheets back into mainPage first to prevent duplication
+            unpaginateLiveA4Pages();
+
+            const clone = mainPage.cloneNode(true);
+            clone.querySelectorAll('.sheet-footer-tag').forEach(f => f.remove());
+            
+            let htmlStr = clone.innerHTML;
+            if (htmlStr.includes('sourceHTML') || htmlStr.includes('fileDownload')) {
+                htmlStr = htmlStr
+                    .replace(/['"]\s*;\s*const sourceHTML = [\s\S]*$/gi, '')
+                    .replace(/'; const sourceHTML[\s\S]*/gi, '')
+                    .replace(/const sourceHTML = [\s\S]*$/gi, '');
+            }
+
+            // Re-run pagination for live view display
+            paginateLiveA4Pages();
+            return htmlStr;
+        }
+
+        // History & Version Control Audit System with LocalStorage Persistence
+        const HistoryManager = {
+            stack: [],
+            currentIndex: -1,
+
+            init() {
+                // Auto-cleanup any stray code fragments in resume-content DOM
+                const resumeElem = document.getElementById('resume-content');
+                if (resumeElem && resumeElem.innerHTML.includes('sourceHTML')) {
+                    resumeElem.innerHTML = resumeElem.innerHTML.replace(/['"]\s*;\s*const sourceHTML = [\s\S]*?\},\s*100\);?\s*\}/gi, '').replace(/'; const sourceHTML[\s\S]*/gi, '');
+                }
+
+                const savedStack = localStorage.getItem('cv_history_stack');
+                const savedIndex = localStorage.getItem('cv_history_index');
+
+                if (savedStack && savedIndex !== null) {
+                    try {
+                        const parsed = JSON.parse(savedStack);
+                        const isCorrupted = Array.isArray(parsed) && parsed.some(item => item && item.html && (item.html.includes('sourceHTML') || item.html.includes('fileDownload')));
+                        
+                        if (isCorrupted) {
+                            localStorage.removeItem('cv_history_stack');
+                            localStorage.removeItem('cv_history_index');
+                            this.stack = [];
+                            this.currentIndex = -1;
+                        } else {
+                            this.stack = parsed;
+                            this.currentIndex = parseInt(savedIndex, 10);
+                            if (this.stack.length > 0 && this.currentIndex >= 0 && this.currentIndex < this.stack.length) {
+                                resumeElem.innerHTML = this.stack[this.currentIndex].html;
+                                ensureTrainingLogosPresent();
+                                ensureCertificateLinksPresent();
+                                ensureAddress4PartsPresent();
+                                this.attachListeners();
+                                this.updateUI();
+                                paginateLiveA4Pages();
+                                return;
+                            }
+                        }
+                    } catch(e) {
+                        console.error('Error restoring history from localStorage:', e);
+                        localStorage.removeItem('cv_history_stack');
+                        localStorage.removeItem('cv_history_index');
+                    }
+                }
+
+                ensureTrainingLogosPresent();
+                ensureCertificateLinksPresent();
+                ensureAddress4PartsPresent();
+                this.pushState('Initial CV Document Loaded');
+                this.attachListeners();
+                paginateLiveA4Pages();
+            },
+
+            saveToStorage() {
+                try {
+                    localStorage.setItem('cv_history_stack', JSON.stringify(this.stack));
+                    localStorage.setItem('cv_history_index', this.currentIndex.toString());
+                } catch(e) {
+                    console.error('Error saving history to localStorage:', e);
+                }
+            },
+
+            pushState(description) {
+                const currentHTML = getFullFlattenedHTML();
+
+                // Truncate redo history if new edit is made
+                if (this.currentIndex < this.stack.length - 1) {
+                    this.stack = this.stack.slice(0, this.currentIndex + 1);
+                }
+
+                // Prevent duplicate consecutive states
+                if (this.stack.length > 0 && this.stack[this.currentIndex].html === currentHTML) {
+                    return;
+                }
+
+                const snapshot = {
+                    id: Date.now(),
+                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+                    description: description || 'Edited Document Content',
+                    html: currentHTML
+                };
+
+                this.stack.push(snapshot);
+                this.currentIndex = this.stack.length - 1;
+                this.saveToStorage();
+                this.updateUI();
+                paginateLiveA4Pages();
+            },
+
+            undo() {
+                if (this.currentIndex > 0) {
+                    this.currentIndex--;
+                    this.applyState();
+                }
+            },
+
+            redo() {
+                if (this.currentIndex < this.stack.length - 1) {
+                    this.currentIndex++;
+                    this.applyState();
+                }
+            },
+
+            jumpTo(index) {
+                if (index >= 0 && index < this.stack.length) {
+                    this.currentIndex = index;
+                    this.applyState();
+                }
+            },
+
+            applyState() {
+                const snapshot = this.stack[this.currentIndex];
+                document.getElementById('resume-content').innerHTML = snapshot.html;
+                this.saveToStorage();
+                this.attachListeners();
+                this.updateUI();
+                paginateLiveA4Pages();
+            },
+
+            clearHistory() {
+                if (confirm('Are you sure you want to clear the change history log?')) {
+                    localStorage.removeItem('cv_history_stack');
+                    localStorage.removeItem('cv_history_index');
+                    this.stack = [];
+                    this.currentIndex = -1;
+                    this.pushState('History Reset');
+                }
+            },
+
+            attachListeners() {
+                const editables = document.querySelectorAll('[contenteditable]');
+                editables.forEach(el => {
+                    el.oninput = () => {
+                        const text = el.innerText || el.textContent || '';
+                        if (/\b(19|20)\d{2}\b/i.test(text) || /present|current/i.test(text)) {
+                            autoSortAllSections(true);
+                        }
+                    };
+                    el.onblur = () => {
+                        autoSortAllSections(false);
+                        this.pushState(`Edited text section`);
+                    };
+                });
+                attachLinkClickListeners();
+                updateAllProjectsBulletControls();
+                updateAllTrainingBulletControls();
+            },
+
+            updateUI() {
+                const countBadge = document.getElementById('history-badge-count');
+                const totalChangesSpan = document.getElementById('modal-total-changes');
+                const undoBtn = document.getElementById('undo-action-btn');
+                const redoBtn = document.getElementById('redo-action-btn');
+
+                const totalChanges = Math.max(0, this.stack.length - 1);
+                if (countBadge) countBadge.innerText = totalChanges;
+                if (totalChangesSpan) totalChangesSpan.innerText = totalChanges;
+
+                if (undoBtn) undoBtn.disabled = (this.currentIndex <= 0);
+                if (redoBtn) redoBtn.disabled = (this.currentIndex >= this.stack.length - 1);
+
+                this.renderModalList();
+            },
+
+            renderModalList() {
+                const container = document.getElementById('history-items-container');
+                if (!container) return;
+
+                if (this.stack.length === 0) {
+                    container.innerHTML = '<div style="text-align:center; color:#94a3b8; padding:20px;">No changes recorded yet.</div>';
+                    return;
+                }
+
+                let html = '';
+                for (let i = this.stack.length - 1; i >= 0; i--) {
+                    const item = this.stack[i];
+                    const isCurrent = (i === this.currentIndex);
+                    const stepNum = i;
+
+                    html += `
+                        <div class="history-item ${isCurrent ? 'current' : ''}">
+                            <div class="history-item-info">
+                                <div class="history-item-title">
+                                    ${isCurrent ? '<i class="fa-solid fa-circle-check" style="color:#0066cc;"></i> ' : ''}
+                                    Step ${stepNum}: ${item.description}
+                                </div>
+                                <div class="history-item-time"><i class="fa-regular fa-clock"></i> ${item.timestamp} ${isCurrent ? ' • Current Active Version' : ''}</div>
+                            </div>
+                            <div>
+                                ${!isCurrent ? `<button class="restore-version-btn" onclick="HistoryManager.jumpTo(${i})"><i class="fa-solid fa-clock-rotate-left"></i> Restore</button>` : '<span style="font-size:11.5px; font-weight:bold; color:#0066cc;">Active State</span>'}
+                            </div>
+                        </div>
+                    `;
+                }
+                container.innerHTML = html;
+            }
+        };
+
+        function openHistoryModal() {
+            document.getElementById('history-modal').classList.add('active');
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('history-modal').classList.remove('active');
+        }
+
+        function paginateLiveA4Pages() {
+            const mainPage = document.getElementById('resume-content');
+            if (!mainPage) return;
+
+            const activeEl = document.activeElement;
+            let caretOffset = 0;
+            if (activeEl && activeEl.isContentEditable) {
+                try { caretOffset = getCaretOffset(activeEl); } catch(e) {}
+            }
+
+            const MAX_A4_HEIGHT = 950;
+
+            // Flatten any existing extra sheet containers back into mainPage
+            const extraSheets = document.querySelectorAll('.page-sheet-extra');
+            extraSheets.forEach(sheet => {
+                while (sheet.firstChild) {
+                    if (sheet.firstChild.classList && sheet.firstChild.classList.contains('sheet-footer-tag')) {
+                        sheet.firstChild.remove();
+                    } else {
+                        mainPage.appendChild(sheet.firstChild);
+                    }
+                }
+                sheet.remove();
+            });
+
+            // Remove existing footer tags
+            const oldFooters = document.querySelectorAll('.sheet-footer-tag');
+            oldFooters.forEach(f => f.remove());
+
+            const pageCountText = document.getElementById('page-count-text');
+
+            if (mainPage.scrollHeight <= MAX_A4_HEIGHT) {
+                if (pageCountText) pageCountText.innerText = `1 / 1 Page (A4)`;
+                if (activeEl && activeEl.isContentEditable && document.body.contains(activeEl)) {
+                    try { activeEl.focus(); setCaretOffset(activeEl, caretOffset); } catch(e) {}
+                }
+                return;
+            }
+
+            // Multi-Page Pagination (Strict Maximum 2 Pages Limit)
+            const allElements = Array.from(mainPage.children);
+            let currentSheetHeight = 0;
+            let pageNum = 1;
+
+            for (let i = 0; i < allElements.length; i++) {
+                const el = allElements[i];
+                if (el.classList && (el.classList.contains('no-export') || el.classList.contains('sheet-footer-tag'))) continue;
+
+                const elHeight = el.offsetHeight || 30;
+
+                if (pageNum < 2 && currentSheetHeight + elHeight > MAX_A4_HEIGHT && i > 0) {
+                    let splitIndex = i;
+                    if (i > 0 && allElements[i - 1].tagName === 'H2') {
+                        splitIndex = i - 1;
+                    }
+
+                    pageNum = 2;
+                    const newSheet = document.createElement('div');
+                    newSheet.className = 'page-sheet-extra';
+                    newSheet.id = `page-sheet-2`;
+
+                    mainPage.parentNode.insertBefore(newSheet, mainPage.nextSibling);
+
+                    for (let j = splitIndex; j < allElements.length; j++) {
+                        newSheet.appendChild(allElements[j]);
+                    }
+                    break;
+                } else {
+                    currentSheetHeight += elHeight;
+                }
+            }
+
+            const sheets = document.querySelectorAll('.page, .page-sheet-extra');
+            const totalSheets = Math.min(2, sheets.length);
+            if (pageCountText) pageCountText.innerText = totalSheets > 1 ? `1 / 2 Pages (A4) (Max)` : `1 / 1 Page (A4)`;
+
+            sheets.forEach((sh, index) => {
+                const footer = document.createElement('div');
+                footer.className = 'sheet-footer-tag no-export';
+                footer.innerText = `Page ${index + 1} of ${totalSheets}`;
+                sh.appendChild(footer);
+            });
+
+            if (activeEl && activeEl.isContentEditable && document.body.contains(activeEl)) {
+                try { activeEl.focus(); setCaretOffset(activeEl, caretOffset); } catch(e) {}
+            }
+        }
+
+        // Initialize Systems on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            ensureTrainingLogosPresent();
+            ensureCertificateLinksPresent();
+            ensureAddress4PartsPresent();
+            autoSortAllSections();
+            HistoryManager.init();
+            updateAllProjectsBulletControls();
+            updateAllTrainingBulletControls();
+            paginateLiveA4Pages();
+
+            document.addEventListener('click', updateToolbarFontSizeOnSelection);
+            document.addEventListener('keyup', () => {
+                updateToolbarFontSizeOnSelection();
+                paginateLiveA4Pages();
+            });
+            document.addEventListener('focusin', updateToolbarFontSizeOnSelection);
+            document.addEventListener('input', paginateLiveA4Pages);
+            window.addEventListener('resize', paginateLiveA4Pages);
+            window.addEventListener('load', () => {
+                setTimeout(paginateLiveA4Pages, 100);
+            });
+        });
+
+        // Rich Text Formatting Logic
+        let savedSelectionRange = null;
+
+        function saveCurrentSelection() {
+            const sel = window.getSelection();
+            if (sel.rangeCount > 0 && !sel.isCollapsed) {
+                const container = document.getElementById('resume-content');
+                if (container.contains(sel.anchorNode)) {
+                    savedSelectionRange = sel.getRangeAt(0).cloneRange();
+                }
+            }
+        }
+
+        document.addEventListener('selectionchange', () => {
+            const sel = window.getSelection();
+            if (sel.rangeCount > 0 && !sel.isCollapsed) {
+                const container = document.getElementById('resume-content');
+                if (container.contains(sel.anchorNode)) {
+                    savedSelectionRange = sel.getRangeAt(0).cloneRange();
+                }
+            }
+            updateToolbarFontSizeOnSelection();
+        });
+
+        function updateToolbarFontSizeOnSelection() {
+            const sel = window.getSelection();
+            if (!sel || sel.rangeCount === 0) return;
+
+            const container = document.getElementById('resume-content');
+            if (!container) return;
+
+            let node = sel.anchorNode;
+            if (!node) return;
+            if (node.nodeType === 3) node = node.parentNode;
+
+            if (!container.contains(node)) return;
+
+            const computedStyle = window.getComputedStyle(node);
+            const fontSizePx = parseFloat(computedStyle.fontSize);
+            if (!fontSizePx) return;
+
+            const select = document.getElementById('fontSizeSelect');
+            if (!select) return;
+
+            const currentPt = Math.round(fontSizePx * 0.75);
+
+            let bestOption = null;
+            let minDiff = Infinity;
+
+            for (let i = 0; i < select.options.length; i++) {
+                const opt = select.options[i];
+                const optVal = parseFloat(opt.value);
+                const diff = Math.abs(currentPt - optVal);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    bestOption = opt.value;
+                }
+            }
+
+            if (bestOption) {
+                select.value = bestOption;
+            }
+        }
+
+        function restoreSelection() {
+            if (savedSelectionRange) {
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(savedSelectionRange);
+            }
+        }
+
+        function formatText(command) {
+            restoreSelection();
+            document.execCommand(command, false, null);
+            HistoryManager.pushState(`Applied ${command} formatting`);
+        }
+
+        function formatTextColor(color) {
+            restoreSelection();
+            document.execCommand('foreColor', false, color);
+            HistoryManager.pushState(`Changed text color to ${color}`);
+        }
+
+        // Professional Typographic Scale Stepper Logic (MS Word / Google Docs style)
+        const FONT_STEPS = [8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 28, 32, 36, 40, 48, 54, 60, 72, 96];
+
+        function stepFontSize(direction) {
+            restoreSelection();
+            const sel = window.getSelection();
+            if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
+                alert('Please highlight/select text first to change its font size.');
+                return;
+            }
+
+            const range = sel.getRangeAt(0);
+            let parentEl = sel.anchorNode.nodeType === 3 ? sel.anchorNode.parentNode : sel.anchorNode;
+            let currentPx = parseFloat(window.getComputedStyle(parentEl).fontSize) || 12;
+            let currentPt = Math.round(currentPx * 0.75); // Convert px to pt
+
+            // Find closest step in FONT_STEPS
+            let idx = FONT_STEPS.findIndex(s => s >= currentPt);
+            if (idx === -1) idx = FONT_STEPS.length - 1;
+
+            let nextIdx = idx + direction;
+            if (nextIdx < 0) nextIdx = 0;
+            if (nextIdx >= FONT_STEPS.length) nextIdx = FONT_STEPS.length - 1;
+
+            let targetPt = FONT_STEPS[nextIdx] + 'pt';
+
+            applyProFontSize(targetPt);
+        }
+
+        function applyProFontSize(sizeStr) {
+            if (!sizeStr) return;
+            restoreSelection();
+            const sel = window.getSelection();
+            if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
+                alert('Please highlight/select the text you want to resize first.');
+                return;
+            }
+
+            // Execute native browser font size command (creates temporary font size tags)
+            document.execCommand('fontSize', false, '7');
+
+            // Find all newly created font tags and apply exact inline font size style
+            const fontElements = document.querySelectorAll('#resume-content font[size="7"]');
+            fontElements.forEach(fontEl => {
+                fontEl.removeAttribute('size');
+                fontEl.style.fontSize = sizeStr;
+            });
+
+            const select = document.getElementById('fontSizeSelect');
+            if (select) select.value = sizeStr;
+
+            HistoryManager.pushState(`Set font size to ${sizeStr}`);
+        }
+
+        function removeItem(element, description) {
+            if (!element) return;
+            const parentItem = element.closest('.item');
+            element.style.transition = 'all 0.2s ease';
+            element.style.opacity = '0';
+            element.style.transform = 'scale(0.96)';
+
+            setTimeout(() => {
+                element.remove();
+                if (parentItem) {
+                    updateProjectBulletControls(parentItem);
+                    updateTrainingBulletControls(parentItem);
+                }
+                HistoryManager.pushState(description || 'Deleted item from document');
+            }, 200);
+        }
+
+        function addTraining() {
+            const container = document.getElementById('training-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'item';
+            newItem.innerHTML = `
+                <div class="subtitle" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px;">
+                    <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" contenteditable="true"><b>Training Program Name</b> | Institution Name</span>
+                    <span style="white-space: nowrap; font-weight: bold; margin-left: 8px;" contenteditable="true">Month Year</span>
+                    <span class="delete-btn no-export" title="Delete Training" onclick="removeItem(this.closest('.item'), 'Deleted Training entry')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <ul>
+                    <li><span contenteditable="true">Key takeaway or project completed during training.</span><span class="delete-btn no-export" title="Delete Bullet" onclick="removeItem(this.closest('li'), 'Deleted Training bullet point')"><i class="fa-solid fa-trash-can"></i></span></li>
+                </ul>
+            `;
+            container.appendChild(newItem);
+            updateTrainingBulletControls(newItem);
+            autoSortAllSections();
+            HistoryManager.pushState('Added New Training Program');
+        }
+
+        function addCertificate() {
+            openAddCertificateModal();
+        }
+
+        function addEducation() {
+            const container = document.getElementById('education-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'item';
+            newItem.innerHTML = `
+                <div class="title">
+                    <span contenteditable="true">Institution Name</span>
+                    <span contenteditable="true">Year – Year</span>
+                    <span class="delete-btn no-export" title="Delete Education" onclick="removeItem(this.closest('.item'), 'Deleted Education entry')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <div class="subtitle" style="margin-bottom: 4px;">
+                    <span contenteditable="true">Degree / Field of Study</span>
+                    <span contenteditable="true">Location</span>
+                </div>
+            `;
+            container.appendChild(newItem);
+            autoSortAllSections();
+            HistoryManager.pushState('Added New Education');
+        }
+
+        function resetPageToOriginal() {
+            if (confirm('Are you sure you want to restart the document back to its clean initial state? All custom draft edits will be cleared.')) {
+                localStorage.removeItem('cv_history_stack');
+                localStorage.removeItem('cv_history_index');
+                location.reload();
+            }
+        }
+
+        // Toggle Clean Preview Mode
+        function togglePreviewMode() {
+            const body = document.body;
+            const btn = document.getElementById('preview-mode-btn');
+            body.classList.toggle('preview-mode-active');
+
+            if (body.classList.contains('preview-mode-active')) {
+                if (btn) btn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Edit';
+            } else {
+                if (btn) btn.innerHTML = '<i class="fa-solid fa-eye"></i> Preview';
+            }
+
+            // Recalculate A4 page pagination cleanly for Preview mode
+            paginateLiveA4Pages();
+        }
+
+        // PDF Export - 100% Pixel-Perfect Multi-Page Copy of Live Preview
+        function downloadPDF() {
+            unpaginateLiveA4Pages();
+            paginateLiveA4Pages();
+            const sheets = Array.from(document.querySelectorAll('.page, .page-sheet-extra'));
+            if (sheets.length === 0) return;
+
+            document.body.classList.add('pdf-export-mode');
+
+            // Step 1: Create clean export container for all live A4 sheets
+            const exportContainer = document.createElement('div');
+            exportContainer.id = 'pdf-export-container';
+            exportContainer.style.width = '210mm';
+            exportContainer.style.margin = '0 auto';
+            exportContainer.style.background = '#ffffff';
+
+            sheets.forEach((sheet, idx) => {
+                const clone = sheet.cloneNode(true);
+                
+                // Clean UI buttons and footers
+                clone.querySelectorAll('.no-export, .sheet-footer-tag').forEach(el => el.remove());
+
+                // Handle optional [Area] placeholder cleanup
+                const areaSpan = clone.querySelector('.address-sub .area-span') || clone.querySelector('.address-sub span:first-child');
+                if (areaSpan) {
+                    const areaText = (areaSpan.innerText || areaSpan.textContent || '').trim();
+                    if (!areaText || areaText === '[Area]' || areaText.toLowerCase() === 'area') {
+                        areaSpan.style.display = 'none';
+                        const nextNode = areaSpan.nextSibling;
+                        if (nextNode && nextNode.nodeType === 3 && nextNode.nodeValue.includes(',')) {
+                            nextNode.nodeValue = nextNode.nodeValue.replace(',', '').trim();
+                        }
+                    }
+                }
+
+                // Apply strict A4 sheet dimensions (295mm height prevents 0.1px overflow blank pages)
+                clone.style.width = '210mm';
+                clone.style.minHeight = '280mm';
+                clone.style.height = '295mm';
+                clone.style.maxHeight = '296mm';
+                clone.style.margin = '0';
+                clone.style.padding = '22px 34px';
+                clone.style.boxShadow = 'none';
+                clone.style.border = 'none';
+                clone.style.boxSizing = 'border-box';
+                clone.style.background = '#ffffff';
+                clone.style.overflow = 'hidden';
+
+                exportContainer.appendChild(clone);
+
+                if (idx < sheets.length - 1) {
+                    const pageBreakDiv = document.createElement('div');
+                    pageBreakDiv.className = 'html2pdf__page-break';
+                    pageBreakDiv.style.pageBreakBefore = 'always';
+                    pageBreakDiv.style.breakBefore = 'page';
+                    exportContainer.appendChild(pageBreakDiv);
+                }
+            });
+
+            // Temporarily hide live on-screen sheets while html2pdf captures exportContainer
+            sheets.forEach(s => s.style.display = 'none');
+            document.body.appendChild(exportContainer);
+
+            const cvTitle = (document.getElementById('cv-title-input')?.value || 'Resume').trim().replace(/[^a-zA-Z0-9_]/g, '_');
+            const opt = {
+                margin: 0,
+                filename: `${cvTitle}_Resume.pdf`,
+                image: { type: 'jpeg', quality: 1.0 },
+                html2canvas: {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    letterRendering: true,
+                    backgroundColor: '#ffffff',
+                    scrollX: 0,
+                    scrollY: 0
+                },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['css', 'legacy'] }
+            };
+
+            function cleanup() {
+                sheets.forEach(s => s.style.display = '');
+                if (exportContainer && document.body.contains(exportContainer)) {
+                    document.body.removeChild(exportContainer);
+                }
+                document.body.classList.remove('pdf-export-mode');
+            }
+
+            if (typeof html2pdf !== 'undefined') {
+                html2pdf().set(opt).from(exportContainer).save().then(cleanup).catch(function(err) {
+                    console.error('html2pdf generation error, falling back to print preview:', err);
+                    cleanup();
+                    window.print();
+                });
+            } else {
+                cleanup();
+                window.print();
+            }
+        }
+
+        // Word Export - Clean & MS Word Compatible Document Generation
+        function downloadWord() {
+            const cvTitle = (document.getElementById('cv-title-input')?.value || 'Resume').trim().replace(/[^a-zA-Z0-9_]/g, '_');
+            const cvClone = document.getElementById('resume-content').cloneNode(true);
+            
+            const noExports = cvClone.querySelectorAll('.no-export');
+            noExports.forEach(el => el.remove());
+            const editables = cvClone.querySelectorAll('[contenteditable]');
+            editables.forEach(el => el.removeAttribute('contenteditable'));
+
+            const areaSpan = cvClone.querySelector('.address-sub .area-span') || cvClone.querySelector('.address-sub span:first-child');
+            if (areaSpan) {
+                const areaText = (areaSpan.innerText || areaSpan.textContent || '').trim();
+                if (!areaText || areaText === '[Area]' || areaText.toLowerCase() === 'area') {
+                    const nextNode = areaSpan.nextSibling;
+                    if (nextNode && nextNode.nodeType === 3 && nextNode.nodeValue.includes(',')) {
+                        nextNode.nodeValue = nextNode.nodeValue.replace(',', '').trim();
+                    }
+                    areaSpan.remove();
+                }
+            }
+
+            const content = cvClone.innerHTML;
+            
+            const wordCSS = `
+                @page WordSection1 {
+                    size: 8.5in 11.0in;
+                    margin: 0.4in 0.5in 0.4in 0.5in;
+                    mso-header-margin: 0.3in;
+                    mso-footer-margin: 0.3in;
+                    mso-paper-source: 0;
+                }
+                div.WordSection1 { page: WordSection1; }
+                body {
+                    font-family: Arial, sans-serif !important;
+                    color: #111111 !important;
+                    background-color: #ffffff !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    font-size: 11pt;
+                    line-height: 1.4;
+                }
+                .page { box-shadow: none !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; }
+                h1 { font-size: 22pt; font-weight: bold; text-align: center; margin: 0 0 4pt 0; color: #111111; }
+                h2 { font-size: 13pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5pt solid #111111; padding-bottom: 2pt; margin-top: 12pt; margin-bottom: 6pt; color: #111111; display: flex; justify-content: space-between; align-items: center; }
+                .header-container { text-align: center; margin-bottom: 12pt; }
+                .address-sub { font-size: 10pt; color: #444444; margin-bottom: 4pt; }
+                .contact { font-size: 10pt; color: #333333; }
+                a, a:link, a:visited, .editable-link { color: #0066cc !important; text-decoration: none !important; }
+                ul { margin: 3pt 0 6pt 18pt; padding-left: 0; }
+                li { margin-bottom: 2pt; font-size: 10.5pt; color: #222222; }
+                .item { margin-bottom: 8pt; }
+                .title { font-size: 11pt; font-weight: bold; margin-bottom: 2pt; }
+            `;
+
+            const htmlHeader = `<!DOCTYPE html>
+<html xmlns:o="urn:schemas-microsoft-com:office:office" 
+      xmlns:w="urn:schemas-microsoft-com:office:word" 
+      xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+    <meta charset="utf-8">
+    <title>Resume</title>
+    <!--[if gte mso 9]>
+    <xml>
+      <w:WordDocument>
+        <w:View>Print</w:View>
+        <w:Zoom>100</w:Zoom>
+        <w:DoNotOptimizeForCustomXSL/>
+      </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>${wordCSS}</style>
+</head>
+<body>
+    <div class="WordSection1">
+        <div class="page">`;
+            const htmlFooter = `</div></div></body></html>`;
+            const sourceHTML = htmlHeader + content + htmlFooter;
+
+            const blob = new Blob(['\ufeff' + sourceHTML], {
+                type: 'application/msword'
+            });
+
+            const url = URL.createObjectURL(blob);
+            const fileDownload = document.createElement('a');
+            fileDownload.href = url;
+            fileDownload.download = `${cvTitle}_Resume.doc`;
+            document.body.appendChild(fileDownload);
+            fileDownload.click();
+
+            setTimeout(function() {
+                if (document.body.contains(fileDownload)) {
+                    document.body.removeChild(fileDownload);
+                }
+                window.URL.revokeObjectURL(url);
+            }, 100);
+        }
+
+        // ==================== MONGODB CLOUD SYNC & AUTH INTEGRATION ====================
+        let currentCvId = null;
+        let autoSaveTimer = null;
+
+        function deduplicateAllContent(container) {
+            if (!container) return false;
+
+            let removedAny = false;
+
+            // Step 1: Consolidate duplicate section containers into a single container
+            const containerIds = ['education-container', 'projects-container', 'training-container', 'certificates-container'];
+            containerIds.forEach(id => {
+                const containers = Array.from(container.querySelectorAll('#' + id));
+                if (containers.length > 1) {
+                    const primaryContainer = containers[0];
+                    for (let k = 1; k < containers.length; k++) {
+                        const extraContainer = containers[k];
+                        while (extraContainer.firstChild) {
+                            primaryContainer.appendChild(extraContainer.firstChild);
+                        }
+                        extraContainer.remove();
+                        removedAny = true;
+                    }
+                }
+            });
+
+            // Step 2: Remove duplicate H2 section headings by clean text signature
+            const h2Elements = Array.from(container.querySelectorAll('h2'));
+            const seenH2 = new Set();
+            h2Elements.forEach(h2 => {
+                const titleSpan = h2.querySelector('span');
+                let titleText = titleSpan ? titleSpan.innerText : h2.innerText;
+                titleText = (titleText || '').replace(/[\+\s]*Add\s+[\w\s]+/gi, '').replace(/[^a-zA-Z]/g, '').toLowerCase();
+
+                if (titleText) {
+                    if (seenH2.has(titleText)) {
+                        h2.remove();
+                        removedAny = true;
+                    } else {
+                        seenH2.add(titleText);
+                    }
+                }
+            });
+
+            // Step 3: Remove duplicate .item entries (Education / Projects / Training entries)
+            const itemElements = Array.from(container.querySelectorAll('.item'));
+            const seenItems = new Set();
+            itemElements.forEach(item => {
+                const text = (item.innerText || item.textContent || '').trim().replace(/\s+/g, ' ');
+                if (text) {
+                    if (seenItems.has(text)) {
+                        item.remove();
+                        removedAny = true;
+                    } else {
+                        seenItems.add(text);
+                    }
+                }
+            });
+
+            // Step 4: Remove duplicate .skills-row entries
+            const skillRows = Array.from(container.querySelectorAll('.skills-row'));
+            const seenSkills = new Set();
+            skillRows.forEach(row => {
+                const text = (row.innerText || row.textContent || '').trim().replace(/\s+/g, ' ');
+                if (text) {
+                    if (seenSkills.has(text)) {
+                        row.remove();
+                        removedAny = true;
+                    } else {
+                        seenSkills.add(text);
+                    }
+                }
+            });
+
+            return removedAny;
+        }
+
+        async function initCloudCV() {
+            const urlParams = new URLSearchParams(window.location.search);
+            currentCvId = urlParams.get('id');
+
+            if (!currentCvId) {
+                alert('No CV specified. Redirecting to your Dashboard...');
+                window.location.href = '/dashboard.html';
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/cvs/' + currentCvId);
+                if (res.status === 401 || res.status === 403) {
+                    alert('Unauthorized access. Please log in.');
+                    window.location.href = '/index.html';
+                    return;
+                }
+
+                const data = await res.json();
+                if (!data.success || !data.cv) {
+                    alert('CV not found or access denied. Redirecting to Dashboard...');
+                    window.location.href = '/dashboard.html';
+                    return;
+                }
+
+                const cv = data.cv;
+                const titleInput = document.getElementById('cv-title-input');
+                if (titleInput) {
+                    titleInput.value = cv.title || 'Untitled CV';
+                }
+                document.title = (cv.title || 'CV') + ' - Specialised CV Editor';
+
+                if (cv.content && cv.content.trim()) {
+                    const resumeElem = document.getElementById('resume-content');
+                    if (resumeElem) {
+                        resumeElem.innerHTML = cv.content;
+                        const wasCleaned = deduplicateAllContent(resumeElem);
+                        if (wasCleaned) {
+                            setTimeout(saveCVToDatabase, 400);
+                        }
+                    }
+                }
+
+                ensureTrainingLogosPresent();
+                ensureCertificateLinksPresent();
+                ensureAddress4PartsPresent();
+                paginateLiveA4Pages();
+                
+                updateSaveStatus('Synced to Cloud', '#10b981');
+
+                // Check mode or download flags
+                const mode = urlParams.get('mode');
+                const download = urlParams.get('download');
+
+                if (mode === 'preview') {
+                    document.body.classList.add('in-preview-iframe');
+                    togglePreviewMode();
+                }
+
+                if (download === 'pdf') {
+                    setTimeout(() => {
+                        downloadPDF();
+                    }, 500);
+                }
+            } catch (err) {
+                console.error('Error loading CV from cloud:', err);
+                updateSaveStatus('Sync Error', '#ef4444');
+            }
+        }
+
+        async function saveCVToDatabase() {
+            if (!currentCvId) return;
+
+            const titleInput = document.getElementById('cv-title-input');
+            const title = titleInput ? titleInput.value.trim() : 'Untitled CV';
+            const content = getFullFlattenedHTML();
+
+            updateSaveStatus('Saving...', '#f59e0b');
+
+            try {
+                const res = await fetch('/api/cvs/' + currentCvId, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content })
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    updateSaveStatus('Saved to MongoDB', '#10b981');
+                } else {
+                    updateSaveStatus('Save Failed', '#ef4444');
+                    alert(data.message || 'Failed to save CV.');
+                }
+            } catch (err) {
+                console.error('Error saving CV to database:', err);
+                updateSaveStatus('Save Error', '#ef4444');
+            }
+        }
+
+        function updateSaveStatus(text, color) {
+            const statusElem = document.getElementById('save-status');
+            if (statusElem) {
+                statusElem.innerHTML = `<i class="fa-solid fa-cloud"></i> ${text}`;
+                statusElem.style.color = color;
+            }
+        }
+
+        // Auto-save debounced listener
+        document.addEventListener('input', function(e) {
+            if (e.target.closest('#resume-content') || e.target.id === 'cv-title-input') {
+                updateSaveStatus('Unsaved changes...', '#f59e0b');
+                clearTimeout(autoSaveTimer);
+                autoSaveTimer = setTimeout(saveCVToDatabase, 2500);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', initCloudCV);
+    </script>
+</body>
+
+</html>
