@@ -1872,6 +1872,10 @@
             if (rows.length === 0) return;
 
             rows.forEach(row => {
+                // Skip rows that already have a properly set certificate link — preserve saved URLs
+                const existingLink = row.querySelector('a.editable-link[href]:not([href="#"])') ||
+                                     row.querySelector('.cert-subtitle a[href]:not([href="#"])');
+                if (existingLink) return;
                 const fullText = (row.innerText || row.textContent || '').replace(/\s+/g, ' ').trim();
                 
                 // Match against default cert dictionary first
@@ -2176,13 +2180,14 @@
             let htmlStr = clone.innerHTML;
             if (htmlStr.includes('sourceHTML') || htmlStr.includes('fileDownload')) {
                 htmlStr = htmlStr
-                    .replace(/['"]\s*;\s*const sourceHTML = [\s\S]*$/gi, '')
+                    .replace(/['"\]\s*;\s*const sourceHTML = [\s\S]*$/gi, '')
                     .replace(/'; const sourceHTML[\s\S]*/gi, '')
                     .replace(/const sourceHTML = [\s\S]*$/gi, '');
             }
 
-            // Re-run pagination for live view display
-            paginateLiveA4Pages();
+            // NOTE: Do NOT call paginateLiveA4Pages() here — it causes re-entrant
+            // pagination which duplicates sections. The caller is responsible for
+            // running pagination after the snapshot is taken if needed.
             return htmlStr;
         }
 
@@ -2216,12 +2221,24 @@
                             this.currentIndex = parseInt(savedIndex, 10);
                             if (this.stack.length > 0 && this.currentIndex >= 0 && this.currentIndex < this.stack.length) {
                                 resumeElem.innerHTML = this.stack[this.currentIndex].html;
+
+                                // Deduplicate any sections that were baked into the saved snapshot
+                                ['education-container', 'projects-container', 'training-container', 'certificates-container'].forEach(id => {
+                                    const all = resumeElem.querySelectorAll(`#${id}`);
+                                    for (let i = 1; i < all.length; i++) {
+                                        let prev = all[i].previousElementSibling;
+                                        while (prev && prev.tagName !== 'H2') prev = prev.previousElementSibling;
+                                        if (prev && prev.tagName === 'H2') prev.remove();
+                                        all[i].remove();
+                                    }
+                                });
+
                                 ensureTrainingLogosPresent();
                                 ensureCertificateLinksPresent();
                                 ensureAddress4PartsPresent();
                                 this.attachListeners();
                                 this.updateUI();
-                                paginateLiveA4Pages();
+                                // Pagination will be run once by DOMContentLoaded after init() returns
                                 return;
                             }
                         }
@@ -2237,7 +2254,7 @@
                 ensureAddress4PartsPresent();
                 this.pushState('Initial CV Document Loaded');
                 this.attachListeners();
-                paginateLiveA4Pages();
+                // Pagination will be run once by DOMContentLoaded after init() returns
             },
 
             saveToStorage() {
@@ -2393,7 +2410,9 @@
             document.getElementById('history-modal').classList.remove('active');
         }
 
-        function paginateLiveA4Pages() {
+        let _paginationScheduled = false;
+        const _paginateCore = function() {
+            _paginationScheduled = false;
             const mainPage = document.getElementById('resume-content');
             if (!mainPage) return;
 
@@ -2479,10 +2498,52 @@
             if (activeEl && activeEl.isContentEditable && document.body.contains(activeEl)) {
                 try { activeEl.focus(); setCaretOffset(activeEl, caretOffset); } catch(e) {}
             }
+        };
+
+        // Public wrapper: debounces rapid/re-entrant calls so Education (and other sections)
+        // never get duplicated by multiple synchronous pagination triggers in the same tick.
+        function paginateLiveA4Pages() {
+            if (_paginationScheduled) return;
+            _paginationScheduled = true;
+            requestAnimationFrame(_paginateCore);
         }
 
         // Initialize Systems on Load
         window.addEventListener('DOMContentLoaded', () => {
+            // STEP 0: Clear corrupted localStorage if it contains duplicate sections
+            try {
+                const savedStack = localStorage.getItem('cv_history_stack');
+                if (savedStack) {
+                    const parsed = JSON.parse(savedStack);
+                    const lastItem = parsed && parsed[parsed.length - 1];
+                    if (lastItem && lastItem.html) {
+                        // Count occurrences of education-container in saved HTML
+                        const matches = (lastItem.html.match(/id="education-container"/g) || []).length;
+                        if (matches > 1) {
+                            console.warn('[CV] Corrupted localStorage detected (duplicate sections). Clearing history.');
+                            localStorage.removeItem('cv_history_stack');
+                            localStorage.removeItem('cv_history_index');
+                        }
+                    }
+                }
+            } catch(e) {}
+
+            // STEP 1: Remove any duplicate section containers from the live DOM
+            ['education-container', 'projects-container', 'training-container', 'certificates-container'].forEach(id => {
+                const all = document.querySelectorAll(`#${id}`);
+                if (all.length > 1) {
+                    // Keep only the first; remove all extras and their associated H2 header
+                    for (let i = 1; i < all.length; i++) {
+                        let node = all[i];
+                        // Also remove the preceding H2 heading that belongs to this duplicate
+                        let prev = node.previousElementSibling;
+                        while (prev && prev.tagName !== 'H2') prev = prev.previousElementSibling;
+                        if (prev && prev.tagName === 'H2') prev.remove();
+                        node.remove();
+                    }
+                }
+            });
+
             ensureTrainingLogosPresent();
             ensureCertificateLinksPresent();
             ensureAddress4PartsPresent();
@@ -2501,9 +2562,9 @@
             document.addEventListener('focusin', updateToolbarFontSizeOnSelection);
             document.addEventListener('input', paginateLiveA4Pages);
             window.addEventListener('resize', paginateLiveA4Pages);
-            window.addEventListener('load', () => {
-                setTimeout(paginateLiveA4Pages, 100);
-            });
+            // NOTE: paginateLiveA4Pages() already runs above on DOMContentLoaded.
+            // A second call on window.load would re-paginate the already-paginated DOM
+            // and move the 2nd-page sheet content into yet another sheet, causing duplication.
         });
 
         // Rich Text Formatting Logic
