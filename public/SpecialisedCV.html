@@ -2185,9 +2185,10 @@
                     .replace(/const sourceHTML = [\s\S]*$/gi, '');
             }
 
-            // NOTE: Do NOT call paginateLiveA4Pages() here — it causes re-entrant
-            // pagination which duplicates sections. The caller is responsible for
-            // running pagination after the snapshot is taken if needed.
+            // Re-paginate the live view (call core directly to avoid debounce delay
+            // leaving DOM in a permanently flat/unpaginated state after every save).
+            _paginationScheduled = false;
+            _paginateCore();
             return htmlStr;
         }
 
@@ -3102,10 +3103,18 @@
                     const resumeElem = document.getElementById('resume-content');
                     if (resumeElem) {
                         resumeElem.innerHTML = cv.content;
-                        const wasCleaned = deduplicateAllContent(resumeElem);
-                        if (wasCleaned) {
-                            setTimeout(saveCVToDatabase, 400);
-                        }
+                        // Always deduplicate after loading from DB — removes
+                        // any sections that were saved in a duplicated state
+                        deduplicateAllContent(resumeElem);
+                        ['education-container','projects-container','training-container','certificates-container'].forEach(id => {
+                            const all = resumeElem.querySelectorAll('#' + id);
+                            for (let i = 1; i < all.length; i++) {
+                                let prev = all[i].previousElementSibling;
+                                while (prev && prev.tagName !== 'H2') prev = prev.previousElementSibling;
+                                if (prev && prev.tagName === 'H2') prev.remove();
+                                all[i].remove();
+                            }
+                        });
                     }
                 }
 
