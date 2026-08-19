@@ -632,8 +632,22 @@
             color: #333;
         }
 
+        a.editable-link,
+        .editable-link {
+            color: #0066cc !important;
+            cursor: pointer !important;
+            user-select: auto;
+            transition: color 0.15s ease;
+        }
+
+        a.editable-link:hover,
+        .editable-link:hover {
+            color: #004499 !important;
+            text-decoration: underline !important;
+        }
+
         .item {
-            margin-bottom: 9px;
+            margin-bottom: 4.5px;
             position: relative;
         }
 
@@ -642,35 +656,73 @@
             justify-content: space-between;
             align-items: baseline;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 9pt;
+            line-height: 1.3;
         }
 
         .subtitle {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            font-style: italic;
-            font-size: 12.5px;
+            font-style: normal;
+            font-size: 9pt;
             color: #444;
-            margin-bottom: 2.5px;
+            margin-bottom: 2px;
+            line-height: 1.3;
+        }
+
+        .cert-subtitle {
+            font-style: normal;
+            font-size: 9pt;
+            color: #333;
+            display: block;
+            margin-top: 0.5px;
+            margin-bottom: 2px;
+            line-height: 1.3;
         }
 
         ul {
-            margin: 3px 0 0 18px;
+            margin: 2px 0 0 16px;
             padding: 0;
-            font-size: 12.5px;
+            font-size: 9pt;
         }
 
         li {
-            margin-bottom: 3px;
-            line-height: 1.4;
+            margin-bottom: 2px;
+            line-height: 1.35;
+            font-size: 9pt;
         }
 
         .skills-row,
         .cert-row {
-            font-size: 12.5px;
+            font-size: 9pt;
+            margin-bottom: 2.5px;
+            line-height: 1.35;
+        }
+
+        #projects-container .item,
+        #training-container .item {
+            margin-bottom: 4.5px;
+        }
+
+        #certificates-container .item,
+        #education-container .item {
             margin-bottom: 3px;
-            line-height: 1.4;
+        }
+
+        #projects-container .title,
+        #training-container .title,
+        #certificates-container .title,
+        #education-container .title {
+            font-size: 9pt;
+            line-height: 1.3;
+        }
+
+        #training-container .subtitle,
+        #education-container .subtitle {
+            font-size: 9pt;
+            line-height: 1.3;
+            margin-bottom: 2px;
         }
 
         .cert-row {
@@ -817,10 +869,10 @@
                 <button class="tool-btn-sm" type="button" title="Decrease Font Size" onmousedown="event.preventDefault()" onclick="stepFontSize(-1)"><i class="fa-solid fa-minus"></i></button>
                 <select id="fontSizeSelect" class="font-size-select-pro" title="Select Font Size" onchange="applyProFontSize(this.value)">
                     <option value="8pt">8 pt</option>
-                    <option value="9pt">9 pt</option>
+                    <option value="9pt" selected>9 pt</option>
                     <option value="10pt">10 pt</option>
                     <option value="11pt">11 pt</option>
-                    <option value="12pt" selected>12 pt</option>
+                    <option value="12pt">12 pt</option>
                     <option value="13pt">13 pt</option>
                     <option value="14pt">14 pt</option>
                     <option value="16pt">16 pt</option>
@@ -887,17 +939,17 @@
 
         <div id="projects-container">
             <div class="item">
-                <div class="title" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center;">
+                <div class="title" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center; font-size: 9pt;">
                     <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        <span style="font-weight:bold; font-size:12.5px;" contenteditable="true">AI-Powered Online Examination & Proctoring System</span>
+                        <span style="font-weight:bold; font-size:9pt;" contenteditable="true">AI-Powered Online Examination & Proctoring System</span>
                         &nbsp;|&nbsp;
-                        <span style="font-weight:normal; font-size:10.5px; color:#333;" contenteditable="true">React.js, Node.js, Express.js, MongoDB, Socket.io</span>
+                        <span style="font-weight:normal; font-size:9pt; color:#333;" contenteditable="true">React.js, Node.js, Express.js, MongoDB, Socket.io</span>
                         &nbsp;|&nbsp;
-                        <a href="https://github.com/ashirwad682/Invigilo.git" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://github.com/ashirwad682/Invigilo.git" target="_blank" class="editable-link" style="font-size:9pt; color:#0066cc; text-decoration:none;"><i class="fa-brands fa-github"></i></a>
                         &nbsp;|&nbsp;
-                        <a href="https://invigilo-ai.vercel.app" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>
+                        <a href="https://invigilo-ai.vercel.app" target="_blank" class="editable-link" style="font-size:9pt; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>
                     </span>
-                    <span style="font-weight:bold; font-size:12.5px; white-space:nowrap; margin-left:12px;" contenteditable="true">Mar 2026</span>
+                    <span style="font-weight:bold; font-size:9pt; white-space:nowrap; margin-left:12px;" contenteditable="true">Mar 2026</span>
                     <span class="delete-btn no-export" title="Delete Project" onclick="removeItem(this.closest('.item'), 'Deleted Project: AI-Powered Examination System')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
                 <ul>
@@ -910,17 +962,17 @@
             </div>
 
             <div class="item">
-                <div class="title" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center;">
+                <div class="title" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center; font-size: 9pt;">
                     <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        <span style="font-weight:bold; font-size:12.5px;" contenteditable="true">PepsiCo Distributor Management Portal</span>
+                        <span style="font-weight:bold; font-size:9pt;" contenteditable="true">PepsiCo Distributor Management Portal</span>
                         &nbsp;|&nbsp;
-                        <span style="font-weight:normal; font-size:10.5px; color:#333;" contenteditable="true">React.js, Supabase, Node.js, Razorpay, Framer Motion</span>
+                        <span style="font-weight:normal; font-size:9pt; color:#333;" contenteditable="true">React.js, Supabase, Node.js, Razorpay, Framer Motion</span>
                         &nbsp;|&nbsp;
-                        <a href="https://github.com/ashirwad682/pepsico-project.git" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://github.com/ashirwad682/pepsico-project.git" target="_blank" class="editable-link" style="font-size:9pt; color:#0066cc; text-decoration:none;"><i class="fa-brands fa-github"></i></a>
                         &nbsp;|&nbsp;
-                        <a href="https://pepsico-frontend.vercel.app" target="_blank" class="editable-link" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>
+                        <a href="https://pepsico-frontend.vercel.app" target="_blank" class="editable-link" style="font-size:9pt; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>
                     </span>
-                    <span style="font-weight:bold; font-size:12.5px; white-space:nowrap; margin-left:12px;" contenteditable="true">Feb 2026</span>
+                    <span style="font-weight:bold; font-size:9pt; white-space:nowrap; margin-left:12px;" contenteditable="true">Feb 2026</span>
                     <span class="delete-btn no-export" title="Delete Project" onclick="removeItem(this.closest('.item'), 'Deleted Project: PepsiCo Distributor Portal')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
                 <ul>
@@ -940,15 +992,17 @@
         </h2>
         <div id="training-container">
             <div class="item">
-                <div class="subtitle" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px;">
+                <div class="title" style="white-space: nowrap; display: flex; justify-content: space-between; align-items: center; font-size: 9pt;">
                     <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        <span contenteditable="true"><b>Think Design Prototype – Design Thinking (Figma)</b> | Lovely Professional University, CPE</span>
+                        <span contenteditable="true" style="font-weight:bold; font-size:9pt;">Think Design Prototype – Design Thinking (Figma)</span>
                         &nbsp;|&nbsp;
-                        <a href="https://certificate-link.example.com" target="_blank" class="editable-link" title="View Training Certificate" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-certificate"></i></a>
+                        <span contenteditable="true" style="font-weight:normal; font-size:9pt; color:#333;">Lovely Professional University, CPE</span>
                         &nbsp;|&nbsp;
-                        <a href="https://groww-prototype.example.com" target="_blank" class="editable-link" title="View Live Project Prototype" style="font-size:11px; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>
+                        <a href="https://certificate-link.example.com" target="_blank" class="editable-link" title="View Training Certificate" style="font-size:9pt; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-certificate"></i></a>
+                        &nbsp;|&nbsp;
+                        <a href="https://groww-prototype.example.com" target="_blank" class="editable-link" title="View Live Project Prototype" style="font-size:9pt; color:#0066cc; text-decoration:none;"><i class="fa-solid fa-globe"></i></a>
                     </span>
-                    <span style="white-space: nowrap; font-weight: bold; margin-left: 8px;" contenteditable="true">Jun 2025 – Jul 2025</span>
+                    <span style="white-space: nowrap; font-weight: bold; font-size:9pt; margin-left: 8px;" contenteditable="true">Jun 2025 – Jul 2025</span>
                     <span class="delete-btn no-export" title="Delete Training" onclick="removeItem(this.closest('.item'), 'Deleted Training entry')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
                 <ul>
@@ -965,47 +1019,65 @@
             <button class="add-btn no-export" onclick="openAddCertificateModal()"><i class="fa-solid fa-plus"></i> Add Certificate</button>
         </h2>
         <div id="certificates-container">
-            <div class="cert-row">
-                <div>
-                    <span contenteditable="true"><b>NPTEL Cloud Computing</b></span> — <a href="https://nptel.ac.in" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">NPTEL</a>
+            <div class="item">
+                <div class="title">
+                    <span contenteditable="true"><b>NPTEL Cloud Computing</b></span>
+                    <span contenteditable="true">Nov 2025</span>
+                    <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.item'), 'Deleted Certificate: NPTEL Cloud Computing')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
-                <span contenteditable="true">Nov 2025</span>
-                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: NPTEL Cloud Computing')"><i class="fa-solid fa-trash-can"></i></span>
+                <div class="cert-subtitle">
+                    <span contenteditable="true">NPTEL</span> — <a href="https://nptel.ac.in" target="_blank" class="editable-link" style="color:#0066cc; text-decoration: underline;" title="Verify Credential">Certificate Link</a>
+                </div>
             </div>
-            <div class="cert-row">
-                <div>
-                    <span contenteditable="true"><b>Think Design Prototype - Summer Training on Design Thinking & Figma</b></span> — <a href="https://figma.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Figma</a>
+            <div class="item">
+                <div class="title">
+                    <span contenteditable="true"><b>Think Design Prototype - Summer Training on Design Thinking & Figma</b></span>
+                    <span contenteditable="true">Aug 2025</span>
+                    <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.item'), 'Deleted Certificate: Think Design Prototype')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
-                <span contenteditable="true">Aug 2025</span>
-                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: Think Design Prototype')"><i class="fa-solid fa-trash-can"></i></span>
+                <div class="cert-subtitle">
+                    <span contenteditable="true">Figma</span> — <a href="https://figma.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration: underline;" title="Verify Credential">Certificate Link</a>
+                </div>
             </div>
-            <div class="cert-row">
-                <div>
-                    <span contenteditable="true"><b>Build Gen AI Apps with No-Code Tools</b></span> — <a href="https://infosys.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Infosys Springboard</a>
+            <div class="item">
+                <div class="title">
+                    <span contenteditable="true"><b>Build Gen AI Apps with No-Code Tools</b></span>
+                    <span contenteditable="true">Aug 2025</span>
+                    <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.item'), 'Deleted Certificate: Gen AI Apps')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
-                <span contenteditable="true">Aug 2025</span>
-                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: Gen AI Apps')"><i class="fa-solid fa-trash-can"></i></span>
+                <div class="cert-subtitle">
+                    <span contenteditable="true">Infosys Springboard</span> — <a href="https://infosys.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration: underline;" title="Verify Credential">Certificate Link</a>
+                </div>
             </div>
-            <div class="cert-row">
-                <div>
-                    <span contenteditable="true"><b>ChatGPT-4 Prompt Engineering</b></span> — <a href="https://infosys.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Infosys Springboard</a>
+            <div class="item">
+                <div class="title">
+                    <span contenteditable="true"><b>ChatGPT-4 Prompt Engineering</b></span>
+                    <span contenteditable="true">Aug 2025</span>
+                    <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.item'), 'Deleted Certificate: ChatGPT-4')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
-                <span contenteditable="true">Aug 2025</span>
-                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: ChatGPT-4')"><i class="fa-solid fa-trash-can"></i></span>
+                <div class="cert-subtitle">
+                    <span contenteditable="true">Infosys Springboard</span> — <a href="https://infosys.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration: underline;" title="Verify Credential">Certificate Link</a>
+                </div>
             </div>
-            <div class="cert-row">
-                <div>
-                    <span contenteditable="true"><b>Computational Theory: Language Principle & Finite Automata</b></span> — <a href="https://infosys.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Infosys Springboard</a>
+            <div class="item">
+                <div class="title">
+                    <span contenteditable="true"><b>Computational Theory: Language Principle & Finite Automata</b></span>
+                    <span contenteditable="true">Aug 2025</span>
+                    <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.item'), 'Deleted Certificate: Computational Theory')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
-                <span contenteditable="true">Aug 2025</span>
-                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: Computational Theory')"><i class="fa-solid fa-trash-can"></i></span>
+                <div class="cert-subtitle">
+                    <span contenteditable="true">Infosys Springboard</span> — <a href="https://infosys.com" target="_blank" class="editable-link" style="color:#0066cc; text-decoration: underline;" title="Verify Credential">Certificate Link</a>
+                </div>
             </div>
-            <div class="cert-row">
-                <div>
-                    <span contenteditable="true"><b>Packet Switching Networks and Algorithms</b></span> — <a href="https://coursera.org" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">Coursera</a>
+            <div class="item">
+                <div class="title">
+                    <span contenteditable="true"><b>Packet Switching Networks and Algorithms</b></span>
+                    <span contenteditable="true">Oct 2024</span>
+                    <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.item'), 'Deleted Certificate: Packet Switching')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
-                <span contenteditable="true">Oct 2024</span>
-                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: Packet Switching')"><i class="fa-solid fa-trash-can"></i></span>
+                <div class="cert-subtitle">
+                    <span contenteditable="true">Coursera</span> — <a href="https://coursera.org" target="_blank" class="editable-link" style="color:#0066cc; text-decoration: underline;" title="Verify Credential">Certificate Link</a>
+                </div>
             </div>
         </div>
 
@@ -1028,7 +1100,7 @@
                     <span contenteditable="true">2023 – Present</span>
                     <span class="delete-btn no-export" title="Delete Education" onclick="removeItem(this.closest('.item'), 'Deleted Education: LPU')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
-                <div class="subtitle" style="margin-bottom: 4px;">
+                <div class="subtitle">
                     <span contenteditable="true">Bachelor of Technology – Computer Science and Engineering — CGPA: 6.82</span>
                     <span contenteditable="true">Punjab, India</span>
                 </div>
@@ -1040,7 +1112,7 @@
                     <span contenteditable="true">2021 – 2022</span>
                     <span class="delete-btn no-export" title="Delete Education" onclick="removeItem(this.closest('.item'), 'Deleted Education: Oriental College')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
-                <div class="subtitle" style="margin-bottom: 4px;">
+                <div class="subtitle">
                     <span contenteditable="true">Intermediate (PCM) — Percentage: 63.4</span>
                     <span contenteditable="true">Patna, Bihar</span>
                 </div>
@@ -1386,95 +1458,115 @@
             trainingItems.forEach(item => updateTrainingBulletControls(item));
         }
 
-        // Link Editing & Visiting System (Single-Click Edit, Double-Click Open)
+        // Link Editing & Visiting System (Single-Click to Edit Link, Double-Click to Open Target URL)
         let activeEditingLink = null;
-        let clickTimer = null;
+        let globalLinkClickTimer = null;
+
+        function openLinkEditorForElement(link) {
+            if (!link) return;
+            activeEditingLink = link;
+
+            const currentHref = link.getAttribute('href') || '';
+            const hasValidHref = currentHref && currentHref.trim() !== '' && currentHref.trim() !== '#' && currentHref.trim() !== 'javascript:void(0)';
+            const isIconLink = (link.querySelector('i, svg, img') !== null) || (link.innerText.trim() === '');
+            const textGroup = document.getElementById('link-text-group');
+
+            const urlInput = document.getElementById('link-url-input');
+            if (urlInput) {
+                urlInput.value = hasValidHref ? currentHref.trim() : '';
+            }
+
+            if (isIconLink) {
+                if (textGroup) textGroup.style.display = 'none';
+            } else {
+                if (textGroup) textGroup.style.display = 'block';
+                const textInput = document.getElementById('link-text-input');
+                if (textInput) {
+                    textInput.value = link.innerText.trim();
+                }
+            }
+
+            const visitBtn = document.getElementById('visit-link-btn');
+            if (visitBtn) {
+                visitBtn.disabled = !hasValidHref;
+                visitBtn.style.opacity = hasValidHref ? '1' : '0.5';
+                visitBtn.title = hasValidHref ? 'Open target URL in new tab' : 'No link URL specified yet';
+            }
+
+            const modal = document.getElementById('link-editor-modal');
+            if (modal) {
+                modal.classList.add('active');
+                setTimeout(() => {
+                    if (urlInput) {
+                        urlInput.focus();
+                        urlInput.select();
+                    }
+                }, 50);
+            }
+        }
 
         function attachLinkClickListeners() {
-            const links = document.querySelectorAll('#resume-content a');
+            const links = document.querySelectorAll('#resume-content a, .page-sheet-extra a, .editable-link');
             links.forEach(link => {
-                const href = link.getAttribute('href');
-                const isValidUrl = href && href.trim() !== '' && href.trim() !== '#' && href.trim() !== 'javascript:void(0)';
-
                 link.title = 'Single-click to EDIT link | Double-click to OPEN target URL';
-
-                // Single Click Handler -> Open Edit Modal in Edit mode, or Visit Link in Preview mode
-                link.onclick = (e) => {
-                    e.preventDefault();
-
-                    const isPreviewMode = document.body.classList.contains('preview-mode-active');
-                    const currentHref = link.getAttribute('href');
-                    const hasValidHref = currentHref && currentHref.trim() !== '' && currentHref.trim() !== '#' && currentHref.trim() !== 'javascript:void(0)';
-
-                    if (isPreviewMode) {
-                        if (hasValidHref) {
-                            window.open(currentHref.trim(), '_blank');
-                        } else {
-                            alert('No URL specified for this link yet.');
-                        }
-                        return;
-                    }
-
-                    if (clickTimer) {
-                        clearTimeout(clickTimer);
-                        clickTimer = null;
-                        return; // Handled by dblclick
-                    }
-
-                    clickTimer = setTimeout(() => {
-                        clickTimer = null;
-
-                        activeEditingLink = link;
-                        const isIconLink = (link.querySelector('i, svg, img') !== null) || (link.innerText.trim() === '');
-                        const textGroup = document.getElementById('link-text-group');
-
-                        document.getElementById('link-url-input').value = hasValidHref ? currentHref.trim() : '';
-
-                        if (isIconLink) {
-                            if (textGroup) textGroup.style.display = 'none';
-                        } else {
-                            if (textGroup) textGroup.style.display = 'block';
-                            document.getElementById('link-text-input').value = link.innerText.trim();
-                        }
-
-                        const visitBtn = document.getElementById('visit-link-btn');
-                        if (visitBtn) {
-                            visitBtn.disabled = !hasValidHref;
-                            visitBtn.style.opacity = hasValidHref ? '1' : '0.5';
-                            visitBtn.title = hasValidHref ? 'Open target URL in new tab' : 'No link URL specified yet';
-                        }
-
-                        document.getElementById('link-editor-modal').classList.add('active');
-                        setTimeout(() => {
-                            const urlInp = document.getElementById('link-url-input');
-                            if (urlInp) {
-                                urlInp.focus();
-                                urlInp.select();
-                            }
-                        }, 50);
-                    }, 240);
-                };
-
-                // Double Click Handler -> Open Target URL directly
-                link.ondblclick = (e) => {
-                    e.preventDefault();
-
-                    if (clickTimer) {
-                        clearTimeout(clickTimer);
-                        clickTimer = null;
-                    }
-
-                    const currentHref = link.getAttribute('href');
-                    const hasValidHref = currentHref && currentHref.trim() !== '' && currentHref.trim() !== '#' && currentHref.trim() !== 'javascript:void(0)';
-
-                    if (hasValidHref) {
-                        window.open(currentHref.trim(), '_blank');
-                    } else {
-                        alert('No link URL has been set for this item yet. Single-click on the link to edit its URL.');
-                    }
-                };
             });
         }
+
+        // Capture-phase event delegation: works on all links dynamically without being blocked by contenteditable
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('#resume-content a, .page-sheet-extra a, .editable-link');
+            if (!link) return;
+
+            const isPreviewMode = document.body.classList.contains('preview-mode-active');
+            const currentHref = link.getAttribute('href') || '';
+            const hasValidHref = currentHref && currentHref.trim() !== '' && currentHref.trim() !== '#' && currentHref.trim() !== 'javascript:void(0)';
+
+            if (isPreviewMode) {
+                if (hasValidHref) {
+                    window.open(currentHref.trim(), '_blank');
+                } else {
+                    alert('No URL specified for this link yet.');
+                }
+                return;
+            }
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (globalLinkClickTimer) {
+                clearTimeout(globalLinkClickTimer);
+                globalLinkClickTimer = null;
+                return; // Will be handled by dblclick
+            }
+
+            globalLinkClickTimer = setTimeout(() => {
+                globalLinkClickTimer = null;
+                openLinkEditorForElement(link);
+            }, 230);
+        }, true);
+
+        document.addEventListener('dblclick', (e) => {
+            const link = e.target.closest('#resume-content a, .page-sheet-extra a, .editable-link');
+            if (!link) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (globalLinkClickTimer) {
+                clearTimeout(globalLinkClickTimer);
+                globalLinkClickTimer = null;
+            }
+
+            const currentHref = link.getAttribute('href') || '';
+            const hasValidHref = currentHref && currentHref.trim() !== '' && currentHref.trim() !== '#' && currentHref.trim() !== 'javascript:void(0)';
+
+            if (hasValidHref) {
+                window.open(currentHref.trim(), '_blank');
+            } else {
+                alert('No link URL has been set for this item yet. Click once to edit its URL.');
+                openLinkEditorForElement(link);
+            }
+        }, true);
 
         function visitActiveLink() {
             const urlInput = document.getElementById('link-url-input');
@@ -1493,39 +1585,11 @@
                 if (node.nodeType === 3) node = node.parentNode;
                 const link = node.closest('a');
                 if (link) {
-                    activeEditingLink = link;
-                    const href = link.getAttribute('href');
-                    const isValidUrl = href && href.trim() !== '' && href.trim() !== '#' && href.trim() !== 'javascript:void(0)';
-                    const isIconLink = (link.querySelector('i, svg, img') !== null) || (link.innerText.trim() === '');
-                    const textGroup = document.getElementById('link-text-group');
-
-                    document.getElementById('link-url-input').value = isValidUrl ? href.trim() : '';
-
-                    if (isIconLink) {
-                        if (textGroup) textGroup.style.display = 'none';
-                    } else {
-                        if (textGroup) textGroup.style.display = 'block';
-                        document.getElementById('link-text-input').value = link.innerText.trim();
-                    }
-
-                    const visitBtn = document.getElementById('visit-link-btn');
-                    if (visitBtn) {
-                        visitBtn.disabled = !isValidUrl;
-                        visitBtn.style.opacity = isValidUrl ? '1' : '0.5';
-                    }
-
-                    document.getElementById('link-editor-modal').classList.add('active');
-                    setTimeout(() => {
-                        const urlInp = document.getElementById('link-url-input');
-                        if (urlInp) {
-                            urlInp.focus();
-                            urlInp.select();
-                        }
-                    }, 50);
+                    openLinkEditorForElement(link);
                     return;
                 }
             }
-            alert('Please click directly on any link (LinkedIn, GitHub, Portfolio, Email, Project links) to edit or visit its URL.');
+            alert('Please click directly on any link (Certificate Link, GitHub, Website, Portfolio, etc.) to edit or visit its URL.');
         }
 
         function closeLinkEditorModal() {
@@ -1771,15 +1835,18 @@
                 return;
             }
 
-            const displayText = issuer ? `<span contenteditable="true"><b>${certName}</b></span> — <a href="${url}" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">${issuer}</a>` : `<span contenteditable="true"><b>${certName}</b></span>`;
-
             const container = document.getElementById('certificates-container');
             const newItem = document.createElement('div');
-            newItem.className = 'cert-row';
+            newItem.className = 'item';
             newItem.innerHTML = `
-                <div>${displayText}</div>
-                <span contenteditable="true">${date}</span>
-                <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.cert-row'), 'Deleted Certificate: ${certName}')"><i class="fa-solid fa-trash-can"></i></span>
+                <div class="title">
+                    <span contenteditable="true"><b>${certName}</b></span>
+                    <span contenteditable="true">${date}</span>
+                    <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.item'), 'Deleted Certificate: ${certName.replace(/'/g, "\\'")}')"><i class="fa-solid fa-trash-can"></i></span>
+                </div>
+                <div class="cert-subtitle">
+                    <span contenteditable="true">${issuer}</span> — <a href="${url}" target="_blank" class="editable-link" style="color:#0066cc; text-decoration: underline;" title="Verify Credential">Certificate Link</a>
+                </div>
             `;
             container.appendChild(newItem);
             autoSortAllSections();
@@ -1792,29 +1859,82 @@
             const certContainer = document.getElementById('certificates-container');
             if (!certContainer) return;
 
-            const certRows = certContainer.querySelectorAll('.cert-row');
-            certRows.forEach(row => {
-                const icons = row.querySelectorAll('a i.fa-arrow-up-right-from-square');
-                icons.forEach(ic => ic.remove());
+            const defaultCertMap = [
+                { pattern: /nptel/i, title: 'NPTEL Cloud Computing', date: 'Nov 2025', issuer: 'NPTEL', url: 'https://nptel.ac.in' },
+                { pattern: /think design|figma/i, title: 'Think Design Prototype - Summer Training on Design Thinking & Figma', date: 'Aug 2025', issuer: 'Figma', url: 'https://figma.com' },
+                { pattern: /gen ai|no-code/i, title: 'Build Gen AI Apps with No-Code Tools', date: 'Aug 2025', issuer: 'Infosys Springboard', url: 'https://infosys.com' },
+                { pattern: /chatgpt/i, title: 'ChatGPT-4 Prompt Engineering', date: 'Aug 2025', issuer: 'Infosys Springboard', url: 'https://infosys.com' },
+                { pattern: /computational theory|finite automata/i, title: 'Computational Theory: Language Principle & Finite Automata', date: 'Aug 2025', issuer: 'Infosys Springboard', url: 'https://infosys.com' },
+                { pattern: /packet switching/i, title: 'Packet Switching Networks and Algorithms', date: 'Oct 2024', issuer: 'Coursera', url: 'https://coursera.org' }
+            ];
 
-                const firstSpan = row.querySelector('span[contenteditable]');
-                if (firstSpan && firstSpan.getAttribute('contenteditable') === 'true' && firstSpan.innerHTML.includes('—')) {
-                    const fullHTML = firstSpan.innerHTML;
-                    const parts = fullHTML.split('—');
-                    const titlePart = parts[0].trim();
-                    let issuerPart = parts.slice(1).join('—').trim();
-                    let oldHref = '#';
-                    const anchorMatch = firstSpan.querySelector('a');
-                    if (anchorMatch) {
-                        oldHref = anchorMatch.getAttribute('href') || '#';
-                        issuerPart = anchorMatch.innerHTML.replace(/<i[^>]*><\/i>/gi, '').trim();
-                    }
+            const rows = Array.from(certContainer.querySelectorAll('.item, .cert-row'));
+            if (rows.length === 0) return;
+
+            rows.forEach(row => {
+                const fullText = (row.innerText || row.textContent || '').replace(/\s+/g, ' ').trim();
+                
+                // Match against default cert dictionary first
+                let matchedConfig = defaultCertMap.find(cfg => cfg.pattern.test(fullText));
+                
+                let titleText = '';
+                let dateText = '';
+                let issuerText = '';
+                let href = '';
+
+                if (matchedConfig) {
+                    titleText = matchedConfig.title;
+                    dateText = matchedConfig.date;
+                    issuerText = matchedConfig.issuer;
+                    href = matchedConfig.url;
+                } else {
+                    const bTag = row.querySelector('b');
+                    titleText = bTag ? bTag.innerText.trim() : (row.querySelector('.title span:first-child')?.innerText.trim() || 'Certificate Name');
                     
-                    const wrapperDiv = document.createElement('div');
-                    wrapperDiv.innerHTML = `<span contenteditable="true">${titlePart.startsWith('<b>') ? titlePart : `<b>${titlePart}</b>`}</span> — <a href="${oldHref}" target="_blank" class="editable-link" style="color:#0066cc; text-decoration:none;" title="Verify Credential">${issuerPart}</a>`;
-                    firstSpan.replaceWith(wrapperDiv);
+                    const allSpans = Array.from(row.querySelectorAll('span'));
+                    for (let sp of allSpans) {
+                        const txt = sp.innerText.trim();
+                        if (/\b(19|20)\d{2}\b/.test(txt) && txt !== titleText) {
+                            dateText = txt;
+                            break;
+                        }
+                    }
+                    if (!dateText) dateText = 'Nov 2025';
+
+                    const aTag = row.querySelector('a');
+                    if (aTag) href = aTag.getAttribute('href') || '#';
+                    
+                    if (row.querySelector('.subtitle, .cert-subtitle')) {
+                        const subEl = row.querySelector('.subtitle, .cert-subtitle');
+                        const subText = subEl.innerText || '';
+                        if (subText.includes('—')) {
+                            issuerText = subText.split('—')[0].trim();
+                        } else {
+                            issuerText = subText.replace(/Certificate Link/gi, '').trim();
+                        }
+                    } else if (fullText.includes('—')) {
+                        const parts = fullText.split('—');
+                        issuerText = parts[1].replace(/Certificate Link/gi, '').replace(dateText, '').trim();
+                    }
+                    if (!issuerText) issuerText = 'Issuer';
                 }
+
+                const newItem = document.createElement('div');
+                newItem.className = 'item';
+                newItem.innerHTML = `
+                    <div class="title">
+                        <span contenteditable="true"><b>${titleText}</b></span>
+                        <span contenteditable="true">${dateText}</span>
+                        <span class="delete-btn no-export" title="Delete Certificate" onclick="removeItem(this.closest('.item'), 'Deleted Certificate: ${titleText.replace(/'/g, "\\'")}')"><i class="fa-solid fa-trash-can"></i></span>
+                    </div>
+                    <div class="cert-subtitle">
+                        <span contenteditable="true">${issuerText}</span> — <a href="${href || '#'}" target="_blank" class="editable-link" style="color:#0066cc; text-decoration: underline;" title="Verify Credential">Certificate Link</a>
+                    </div>
+                `;
+                row.replaceWith(newItem);
             });
+
+            attachLinkClickListeners();
         }
 
         // Automatic Date Sorting Engine (Latest top, Oldest bottom)
@@ -1935,7 +2055,7 @@
 
             sortContainerItems('projects-container', '.item');
             sortContainerItems('training-container', '.item');
-            sortContainerItems('certificates-container', '.cert-row');
+            sortContainerItems('certificates-container', '.item, .cert-row');
             sortContainerItems('education-container', '.item');
 
             if (shouldPreserve && isEditing && activeEl && document.body.contains(activeEl)) {
@@ -2371,6 +2491,7 @@
             updateAllProjectsBulletControls();
             updateAllTrainingBulletControls();
             paginateLiveA4Pages();
+            attachLinkClickListeners();
 
             document.addEventListener('click', updateToolbarFontSizeOnSelection);
             document.addEventListener('keyup', () => {
@@ -2574,7 +2695,7 @@
                     <span contenteditable="true">Year – Year</span>
                     <span class="delete-btn no-export" title="Delete Education" onclick="removeItem(this.closest('.item'), 'Deleted Education entry')"><i class="fa-solid fa-trash-can"></i></span>
                 </div>
-                <div class="subtitle" style="margin-bottom: 4px;">
+                <div class="subtitle">
                     <span contenteditable="true">Degree / Field of Study</span>
                     <span contenteditable="true">Location</span>
                 </div>
