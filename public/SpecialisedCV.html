@@ -254,6 +254,22 @@
             box-shadow: 0 4px 12px rgba(0, 102, 204, 0.35) !important;
         }
 
+        .tb-btn-word {
+            background: #ffffff !important;
+            color: #1e40af !important;
+            border: 1px solid #bfdbfe !important;
+            font-weight: 700 !important;
+            box-shadow: 0 1px 3px rgba(37, 99, 235, 0.08) !important;
+        }
+
+        .tb-btn-word:hover {
+            background: #eff6ff !important;
+            border-color: #3b82f6 !important;
+            color: #1d4ed8 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2) !important;
+        }
+
         .tb-btn-ai {
             background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%) !important;
             color: #ffffff !important;
@@ -338,6 +354,39 @@
         .dropdown-menu button:hover {
             background: #f1f5f9;
             color: #0f172a;
+        }
+
+        /* Modern Floating Toast Notification */
+        .cv-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: rgba(15, 23, 42, 0.95);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 10000;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+
+        .cv-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cv-toast i {
+            font-size: 15px;
         }
 
         @keyframes aiGlowPulse {
@@ -1631,6 +1680,9 @@
                 </button>
                 <button class="tb-btn tb-btn-pdf" type="button" title="Download High-Resolution PDF" onclick="downloadPDF()">
                     <i class="fa-solid fa-download"></i> PDF
+                </button>
+                <button class="tb-btn tb-btn-word" type="button" title="Download Word Document (.doc) for Microsoft Word & Google Docs" onclick="downloadWord()">
+                    <i class="fa-solid fa-file-word" style="color:#2563eb;"></i> Word (.doc)
                 </button>
                 <!-- More Dropdown for secondary actions -->
                 <div class="dropdown-container">
@@ -4417,47 +4469,335 @@
             }
         }
 
+        // ================= FLOATING TOAST NOTIFICATION SYSTEM =================
+        function showToast(message, icon = 'fa-solid fa-circle-check', color = '#10b981') {
+            let toast = document.getElementById('cv-global-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'cv-global-toast';
+                toast.className = 'cv-toast no-export';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = `<i class="${icon}" style="color: ${color};"></i> <span>${message}</span>`;
+            toast.classList.add('show');
+
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3200);
+        }
+
+        // ================= PROFESSIONAL MICROSOFT WORD (.DOC) EXPORT =================
         function downloadWord() {
-            const cvTitle = (document.getElementById('cv-title-input')?.value || 'Resume').trim().replace(/[^a-zA-Z0-9_]/g, '_');
-            const cvClone = document.getElementById('resume-content').cloneNode(true);
-            
-            cvClone.querySelectorAll('.no-export').forEach(el => el.remove());
-            cvClone.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+            showToast('Preparing Microsoft Word document (.doc)...', 'fa-solid fa-file-word', '#2563eb');
 
-            const contentHtml = cvClone.innerHTML;
-            const fullWordHTML = `
-                <!DOCTYPE html>
-                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-                <head>
-                    <meta charset='utf-8'>
-                    <title>${cvTitle}</title>
-                    <style>
-                        body { font-family: Arial, sans-serif; font-size: 9.5pt; line-height: 1.35; color: #111; }
-                        h1 { font-size: 20pt; font-weight: bold; text-align: center; margin: 0 0 3pt 0; color: #111; }
-                        h2 { font-size: 11pt; font-weight: bold; text-transform: uppercase; border-bottom: 1.5pt solid #111; padding-bottom: 2pt; margin-top: 10pt; margin-bottom: 4pt; color: #111; }
-                        .header-container { text-align: center; margin-bottom: 10pt; }
-                        .address-sub { font-size: 9.5pt; color: #444; margin-bottom: 3pt; }
-                        .contact { font-size: 9.5pt; color: #333; }
-                        a { color: #0066cc; text-decoration: none; }
-                        ul { margin: 2pt 0 4pt 14pt; padding-left: 0; }
-                        li { font-size: 9.5pt; line-height: 1.32; margin-bottom: 1.5pt; }
-                        .title { font-weight: bold; font-size: 9.5pt; }
-                        .subtitle { font-style: normal; font-size: 9pt; color: #444; }
-                    </style>
-                </head>
-                <body>
-                    ${contentHtml}
-                </body>
-                </html>
-            `;
+            try {
+                const titleInput = document.getElementById('cv-title-input');
+                const rawTitle = titleInput ? titleInput.value.trim() : 'Ashirwad_Kumar_Resume';
+                const cvTitle = (rawTitle || 'Resume').replace(/[^a-zA-Z0-9_-]/g, '_');
 
-            const blob = new Blob(['\ufeff' + fullWordHTML], { type: 'application/msword' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `${cvTitle}.doc`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+                const resume = document.getElementById('resume-content');
+                if (!resume) return;
+
+                let docContent = '';
+
+                // 1. Header: Candidate Name, Address, Contact Info
+                const h1 = resume.querySelector('h1');
+                const candidateName = h1 ? h1.innerText.trim() : 'Ashirwad Kumar';
+                const addressEl = resume.querySelector('.address-sub');
+                const addressText = addressEl ? addressEl.innerText.trim() : '';
+
+                const contactEl = resume.querySelector('.contact');
+                let contactFormatted = '';
+                if (contactEl) {
+                    const contactClone = contactEl.cloneNode(true);
+                    contactClone.querySelectorAll('i, .no-export').forEach(i => i.remove());
+                    contactClone.querySelectorAll('a').forEach(a => {
+                        a.style.color = '#0066cc';
+                        a.style.textDecoration = 'none';
+                    });
+                    contactFormatted = contactClone.innerHTML
+                        .replace(/(&nbsp;|\u00A0|\s)*\|(&nbsp;|\u00A0|\s)*/g, ' &nbsp;|&nbsp; ')
+                        .replace(/ {2,}/g, ' ');
+                }
+
+                docContent += `
+                    <div style="text-align: center; margin-bottom: 8pt;">
+                        <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: 20pt; font-weight: bold; color: #111111; margin: 0 0 2pt 0; text-align: center;">${candidateName}</h1>
+                        ${addressText ? `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 9.5pt; color: #444444; margin-bottom: 2.5pt; text-align: center;">${addressText}</div>` : ''}
+                        ${contactFormatted ? `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #333333; text-align: center;">${contactFormatted}</div>` : ''}
+                    </div>
+                `;
+
+                // 2. Iterate through visible sections in DOM order
+                const sectionHeadings = Array.from(resume.querySelectorAll('h2'));
+                sectionHeadings.forEach(h2 => {
+                    // Skip hidden sections
+                    if (h2.style.display === 'none' || h2.classList.contains('no-export')) return;
+
+                    const titleSpan = h2.querySelector('span');
+                    let secTitle = titleSpan ? titleSpan.innerText.trim() : h2.innerText.trim();
+                    secTitle = secTitle.replace(/[+\s]*Add\s+[\w\s]+/gi, '').replace(/[+\s]*AI\s+[\w\s]+/gi, '').trim().toUpperCase();
+
+                    // Section Heading Underlined Bar
+                    docContent += `
+                        <div style="font-family: Arial, Helvetica, sans-serif; font-size: 11pt; font-weight: bold; color: #111111; text-transform: uppercase; border-bottom: 1.5pt solid #333333; padding-bottom: 2pt; margin-top: 10pt; margin-bottom: 4pt; letter-spacing: 0.5pt;">
+                            ${secTitle}
+                        </div>
+                    `;
+
+                    // Find container for this section
+                    let containerEl = h2.nextElementSibling;
+                    while (containerEl && containerEl.tagName === 'H2') {
+                        containerEl = containerEl.nextElementSibling;
+                    }
+                    if (!containerEl || containerEl.style.display === 'none') return;
+
+                    // Summary Section
+                    if (h2.id === 'heading-summary' || containerEl.id === 'summary-container') {
+                        const summaryText = containerEl.innerText.trim();
+                        if (summaryText) {
+                            docContent += `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; line-height: 1.35; color: #222222; margin-top: 2pt; margin-bottom: 5pt; text-align: justify;">${summaryText}</div>`;
+                        }
+                        return;
+                    }
+
+                    // Technical Skills Section
+                    if (containerEl.id === 'skills-container' || containerEl.querySelector('.skills-row')) {
+                        const rows = containerEl.querySelectorAll('.skills-row');
+                        rows.forEach(r => {
+                            const rClone = r.cloneNode(true);
+                            rClone.querySelectorAll('.delete-btn, .no-export').forEach(e => e.remove());
+                            docContent += `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; line-height: 1.34; color: #111111; margin-bottom: 2.5pt;">${rClone.innerHTML.trim()}</div>`;
+                        });
+                        return;
+                    }
+
+                    // Certificates Section
+                    if (containerEl.id === 'certificates-container' || secTitle.includes('CERTIFICATE')) {
+                        const certItems = containerEl.querySelectorAll('.item');
+                        certItems.forEach(item => {
+                            const titleEl = item.querySelector('.title');
+                            const subEl = item.querySelector('.cert-subtitle');
+                            if (!titleEl) return;
+
+                            let certName = '';
+                            let certDate = '';
+                            const spans = Array.from(titleEl.querySelectorAll('span:not(.delete-btn):not(.no-export)'));
+                            if (spans.length >= 2) {
+                                certName = spans[0].innerText.trim();
+                                certDate = spans[spans.length - 1].innerText.trim();
+                            } else if (spans.length === 1) {
+                                certName = spans[0].innerText.trim();
+                            }
+
+                            let certIssuerHTML = '';
+                            if (subEl) {
+                                const subClone = subEl.cloneNode(true);
+                                subClone.querySelectorAll('.delete-btn, .no-export').forEach(e => e.remove());
+                                subClone.querySelectorAll('a').forEach(a => {
+                                    a.style.color = '#0066cc';
+                                    a.style.textDecoration = 'none';
+                                });
+                                certIssuerHTML = subClone.innerHTML.trim();
+                            }
+
+                            docContent += `
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 3pt; margin-bottom: 2.5pt;">
+                                    <tr>
+                                        <td align="left" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #111111; vertical-align: top;">
+                                            <b>${certName}</b>
+                                            ${certIssuerHTML ? `<br><span style="font-size: 8.5pt; color: #444444;">${certIssuerHTML}</span>` : ''}
+                                        </td>
+                                        <td align="right" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; font-weight: bold; color: #111111; text-align: right; white-space: nowrap; vertical-align: top;">
+                                            ${certDate}
+                                        </td>
+                                    </tr>
+                                </table>
+                            `;
+                        });
+                        return;
+                    }
+
+                    // Standard Work Experience, Projects, Training, Education Sections
+                    const items = containerEl.querySelectorAll('.item');
+                    items.forEach(item => {
+                        const titleEl = item.querySelector('.title');
+                        const subtitleEl = item.querySelector('.subtitle');
+                        const ulEl = item.querySelector('ul');
+
+                        if (titleEl) {
+                            const titleClone = titleEl.cloneNode(true);
+                            titleClone.querySelectorAll('.delete-btn, .no-export').forEach(d => d.remove());
+
+                            // Convert empty icon links to text labels
+                            titleClone.querySelectorAll('a').forEach(a => {
+                                const href = (a.getAttribute('href') || '').toLowerCase();
+                                const titleAttr = (a.getAttribute('title') || '').toLowerCase();
+                                if (!a.innerText.trim()) {
+                                    if (href.includes('github') || titleAttr.includes('github')) a.innerText = 'GitHub';
+                                    else if (titleAttr.includes('live') || titleAttr.includes('web') || titleAttr.includes('app')) a.innerText = 'Live App';
+                                    else if (titleAttr.includes('cert')) a.innerText = 'Certificate';
+                                    else a.innerText = 'Link';
+                                }
+                                a.style.color = '#0066cc';
+                                a.style.textDecoration = 'none';
+                            });
+
+                            // Extract the Right Date Span
+                            const titleSpans = Array.from(titleClone.children).filter(c => c.tagName === 'SPAN');
+                            let leftPartHTML = '';
+                            let rightDateHTML = '';
+
+                            if (titleSpans.length >= 2) {
+                                rightDateHTML = titleSpans[titleSpans.length - 1].innerText.trim();
+                                titleSpans[titleSpans.length - 1].remove();
+                                leftPartHTML = titleClone.innerHTML.trim();
+                            } else {
+                                leftPartHTML = titleClone.innerHTML.trim();
+                            }
+
+                            // Clean any double spaces or remaining pipe weirdness
+                            leftPartHTML = leftPartHTML
+                                .replace(/(&nbsp;|\u00A0|\s)*\|(&nbsp;|\u00A0|\s)*/g, ' | ')
+                                .replace(/ {2,}/g, ' ');
+
+                            docContent += `
+                                <table width="100%" border="0" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 3.5pt; margin-bottom: 1.5pt;">
+                                    <tr>
+                                        <td align="left" style="font-family: Arial, Helvetica, sans-serif; font-size: 9.2pt; color: #111111; vertical-align: baseline;">
+                                            ${leftPartHTML}
+                                        </td>
+                                        <td align="right" style="font-family: Arial, Helvetica, sans-serif; font-size: 9pt; font-weight: bold; color: #111111; text-align: right; white-space: nowrap; vertical-align: baseline;">
+                                            ${rightDateHTML}
+                                        </td>
+                                    </tr>
+                                </table>
+                            `;
+                        }
+
+                        // Subtitle (for Education, etc.)
+                        if (subtitleEl) {
+                            const subClone = subtitleEl.cloneNode(true);
+                            subClone.querySelectorAll('.delete-btn, .no-export').forEach(d => d.remove());
+                            docContent += `<div style="font-family: Arial, Helvetica, sans-serif; font-size: 8.8pt; color: #444444; margin-top: 1pt; margin-bottom: 2pt;">${subClone.innerHTML.trim()}</div>`;
+                        }
+
+                        // Bullet Points
+                        if (ulEl) {
+                            const lis = Array.from(ulEl.querySelectorAll('li'));
+                            if (lis.length > 0) {
+                                docContent += `<ul style="margin: 1.5pt 0 4pt 16pt; padding: 0; font-family: Arial, Helvetica, sans-serif; font-size: 9pt; line-height: 1.32; color: #111111;">`;
+                                lis.forEach(li => {
+                                    const liClone = li.cloneNode(true);
+                                    liClone.querySelectorAll('.delete-btn, .no-export').forEach(d => d.remove());
+                                    liClone.querySelectorAll('a').forEach(a => {
+                                        a.style.color = '#0066cc';
+                                        a.style.textDecoration = 'none';
+                                    });
+                                    docContent += `<li style="margin-bottom: 2pt;">${liClone.innerHTML.trim()}</li>`;
+                                });
+                                docContent += `</ul>`;
+                            }
+                        }
+                    });
+                });
+
+                // 3. Assemble full Word HTML with Office XML Print View instructions
+                const fullWordHTML = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office'
+                          xmlns:w='urn:schemas-microsoft-com:office:word'
+                          xmlns='http://www.w3.org/TR/REC-html40'>
+                    <head>
+                        <meta charset='utf-8'>
+                        <title>${cvTitle}</title>
+                        <!--[if gte mso 9]>
+                        <xml>
+                            <w:WordDocument>
+                                <w:View>Print</w:View>
+                                <w:Zoom>100</w:Zoom>
+                                <w:DoNotOptimizeForBrowser/>
+                                <w:Compatibility>
+                                    <w:UseWord2002TableStyleRules/>
+                                    <w:UseWord2010TableStyleRules/>
+                                </w:Compatibility>
+                            </w:WordDocument>
+                        </xml>
+                        <![endif]-->
+                        <style>
+                            @page Section1 {
+                                size: 595.3pt 841.9pt; /* A4 Portrait */
+                                margin: 36.0pt 45.0pt 36.0pt 45.0pt; /* Top/Bottom: 0.5in, Left/Right: 0.625in */
+                                mso-header-margin: 36.0pt;
+                                mso-footer-margin: 36.0pt;
+                                mso-paper-source: 0;
+                            }
+                            div.Section1 {
+                                page: Section1;
+                            }
+                            body {
+                                font-family: Arial, Helvetica, sans-serif;
+                                font-size: 9pt;
+                                line-height: 1.32;
+                                color: #111111;
+                                margin: 0;
+                                padding: 0;
+                            }
+                            table {
+                                border-collapse: collapse;
+                                mso-table-lspace: 0pt;
+                                mso-table-rspace: 0pt;
+                                mso-table-bspace: 0pt;
+                                mso-table-tspace: 0pt;
+                            }
+                            td {
+                                padding: 0;
+                            }
+                            a {
+                                color: #0066cc;
+                                text-decoration: none;
+                            }
+                            a:hover {
+                                text-decoration: underline;
+                            }
+                            ul {
+                                margin: 1.5pt 0 4pt 16pt;
+                                padding: 0;
+                            }
+                            li {
+                                margin-bottom: 2pt;
+                            }
+                            p, div {
+                                margin: 0;
+                                padding: 0;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="Section1">
+                            ${docContent}
+                        </div>
+                    </body>
+                    </html>
+                `;
+
+                // 4. Download file with UTF-8 BOM
+                const blob = new Blob(['\ufeff' + fullWordHTML], { type: 'application/msword;charset=utf-8' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${cvTitle}.doc`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                setTimeout(() => {
+                    showToast('Microsoft Word document (.doc) downloaded successfully!', 'fa-solid fa-circle-check', '#10b981');
+                }, 400);
+
+            } catch (err) {
+                console.error('Word export error:', err);
+                showToast('Failed to export Word document.', 'fa-solid fa-triangle-exclamation', '#ef4444');
+            }
         }
 
         // ================= DEDUPLICATION & UPGRADE OF SAVED CONTENT =================
@@ -4562,7 +4902,7 @@
             const text = clone.innerText.trim();
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(text).then(() => {
-                    alert('Plain text resume copied to clipboard! Optimized for ATS copy-paste applications.');
+                    showToast('Plain text resume copied to clipboard! (ATS Optimized)', 'fa-solid fa-clipboard-check', '#10b981');
                 }).catch(() => {
                     prompt('Copy your plain text resume below:', text);
                 });
